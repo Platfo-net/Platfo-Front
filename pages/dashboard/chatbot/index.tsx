@@ -1,24 +1,24 @@
-import { NextPageWithLayout } from '@/types/next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { DashboardLayout } from '@/components/layouts/DashboardLayout';
-import { chatbotMenu } from '@/constants/dashboardMenu';
-import { Tile } from '@/components/dataDisplay/Tile';
-import { Avatar } from '@/components/dataDisplay/Avatar';
-import { useTranslation } from 'next-i18next';
-import { useEffect, useState } from 'react';
-import { AxiosResponse } from 'axios';
-import { IChatflow, Res_BotBuilder_Chatflow_All } from '@/types/api';
-import { Typography } from '@/components/general/Typography';
-import TileButton from '@/components/general/TileButton/TileButton';
-import BotBuilderService from '@/services/endpoints/BotBuilderService';
-import { Application } from '@/constants/enums';
-import { getFormattedDate, getFormattedTime } from '@/lib/dateAndTimeHelper';
-import BackdropLoading from '@/components/feedback/BackdropLoading/BackdropLoading';
+import { NextPageWithLayout } from "@/types/next";
+//import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { DashboardLayout } from "@/components/layouts/DashboardLayout";
+import { chatbotMenu } from "@/constants/dashboardMenu";
+import { Tile } from "@/components/dataDisplay/Tile";
+import { Avatar } from "@/components/dataDisplay/Avatar";
+import { useTranslation } from "next-i18next";
+import { useEffect, useState } from "react";
+import { AxiosResponse } from "axios";
+import { IChatflow, Res_BotBuilder_Chatflow_All } from "@/types/api";
+import { Typography } from "@/components/general/Typography";
+import TileButton from "@/components/general/TileButton/TileButton";
+import BotBuilderService from "@/services/endpoints/BotBuilderService";
+import { Application } from "@/constants/enums";
+import { getFormattedDate, getFormattedTime } from "@/lib/dateAndTimeHelper";
+import BackdropLoading from "@/components/feedback/BackdropLoading/BackdropLoading";
 
 const { Text } = Typography;
 
 const ChatbotPage: NextPageWithLayout = () => {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
   const [loading, setLoading] = useState(false);
   const [chatflows, setChatflows] = useState<Res_BotBuilder_Chatflow_All>([]);
 
@@ -31,7 +31,7 @@ const ChatbotPage: NextPageWithLayout = () => {
         ...item,
         date:
           getFormattedDate(item.updated_at) +
-          ' - ' +
+          " - " +
           getFormattedTime(item.updated_at),
       }));
       setChatflows(changeData);
@@ -63,7 +63,7 @@ const ChatbotPage: NextPageWithLayout = () => {
         <div className="basis-1/6 m-3 ">
           <TileButton
             onClick={() => {}}
-            title={t('add-new-account')}
+            title={t("add-new-account")}
             color="chatbot"
           />
         </div>
@@ -84,7 +84,7 @@ const ChatbotPage: NextPageWithLayout = () => {
                 height="255px"
                 click={() => {}}
                 clickColor="chatbot"
-                clickLabel={t('details')}
+                clickLabel={t("details")}
                 remove={removeChatflow}
               >
                 <div className="flex flex-col text-center">
@@ -104,19 +104,19 @@ const ChatbotPage: NextPageWithLayout = () => {
 
 export default ChatbotPage;
 
-export const getStaticProps = async ({ locale }: { locale: string }) => {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ['common'])),
-    },
-  };
-};
+// export const getStaticProps = async ({ locale }: { locale: string }) => {
+//   return {
+//     props: {
+//       ...(await serverSideTranslations(locale, ['common'])),
+//     },
+//   };
+// };
 
 ChatbotPage.getLayout = (page) => {
   return (
     <DashboardLayout
       topMenu={chatbotMenu}
-      meta={{ title: 'Chat Bot' }}
+      meta={{ title: "Chat Bot" }}
       color="chatbot"
     >
       {page}

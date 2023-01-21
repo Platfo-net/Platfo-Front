@@ -1,25 +1,25 @@
-import { useRouter } from 'next/router';
-import { AxiosResponse } from 'axios';
-import { useCallback, useEffect, useState } from 'react';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { postmanMenu } from '@/constants/dashboardMenu';
-import { NextPageWithLayout } from '@/types/next';
-import { Path } from '@/constants/enums';
-import { DashboardLayout } from '@/components/layouts/DashboardLayout';
-import InfoSection from '@/components/dataDisplay/InfoSection/InfoSection';
-import { Avatar } from '@/components/dataDisplay/Avatar';
-import { GetStaticPaths } from 'next';
-import BackdropLoading from '@/components/feedback/BackdropLoading/BackdropLoading';
-import LiveChatService from '@/services/endpoints/LiveChatService';
-import { IContact, Res_LiveChat_Contact_Id } from '@/types/api';
-import { useTranslation } from 'next-i18next';
-import { Dot } from '@/components/feedback/Dot';
-import { Typography } from '@/components/general/Typography';
+import { useRouter } from "next/router";
+import { AxiosResponse } from "axios";
+import { useCallback, useEffect, useState } from "react";
+//import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { postmanMenu } from "@/constants/dashboardMenu";
+import { NextPageWithLayout } from "@/types/next";
+import { Path } from "@/constants/enums";
+import { DashboardLayout } from "@/components/layouts/DashboardLayout";
+import InfoSection from "@/components/dataDisplay/InfoSection/InfoSection";
+import { Avatar } from "@/components/dataDisplay/Avatar";
+import { GetStaticPaths } from "next";
+import BackdropLoading from "@/components/feedback/BackdropLoading/BackdropLoading";
+import LiveChatService from "@/services/endpoints/LiveChatService";
+import { IContact, Res_LiveChat_Contact_Id } from "@/types/api";
+import { useTranslation } from "next-i18next";
+import { Dot } from "@/components/feedback/Dot";
+import { Typography } from "@/components/general/Typography";
 
 const { Text } = Typography;
 
 const ContactDetailsPage: NextPageWithLayout = () => {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
   const router = useRouter();
   const { id } = router.query;
 
@@ -70,7 +70,7 @@ const ContactDetailsPage: NextPageWithLayout = () => {
                     isTrue={contactInfo.information.is_verified_user}
                     className="my-1"
                   />
-                  <Text>{t('is_verified_user')}</Text>
+                  <Text>{t("is_verified_user")}</Text>
                 </li>
               )}
               {contactInfo.information.is_user_follow_business !==
@@ -80,7 +80,7 @@ const ContactDetailsPage: NextPageWithLayout = () => {
                     isTrue={contactInfo.information.is_user_follow_business}
                     className="my-1"
                   />
-                  <Text>{t('is_user_follow_business')}</Text>
+                  <Text>{t("is_user_follow_business")}</Text>
                 </li>
               )}
               {contactInfo.information.is_business_follow_user !==
@@ -90,7 +90,7 @@ const ContactDetailsPage: NextPageWithLayout = () => {
                     isTrue={contactInfo.information.is_business_follow_user}
                     className="my-1"
                   />
-                  <Text>{t('is_business_follow_user')}</Text>
+                  <Text>{t("is_business_follow_user")}</Text>
                 </li>
               )}
             </ul>
@@ -103,18 +103,18 @@ const ContactDetailsPage: NextPageWithLayout = () => {
 
 export default ContactDetailsPage;
 
-export const getStaticProps = async ({ locale }: { locale: string }) => {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ['common'])),
-    },
-  };
-};
+// export const getStaticProps = async ({ locale }: { locale: string }) => {
+//   return {
+//     props: {
+//       ...(await serverSideTranslations(locale, ['common'])),
+//     },
+//   };
+// };
 
 export const getStaticPaths: GetStaticPaths<{ id: string }> = async () => {
   return {
     paths: [],
-    fallback: 'blocking',
+    fallback: "blocking",
   };
 };
 
@@ -122,14 +122,14 @@ ContactDetailsPage.getLayout = (page) => {
   const updatePostmanMenu = [
     ...postmanMenu,
     {
-      key: 'contact-info',
-      path: Path.PostmanContacts + '/[id]',
+      key: "contact-info",
+      path: Path.PostmanContacts + "/[id]",
     },
   ];
   return (
     <DashboardLayout
       topMenu={updatePostmanMenu}
-      meta={{ title: 'Contact Details' }}
+      meta={{ title: "Contact Details" }}
     >
       {page}
     </DashboardLayout>

@@ -1,21 +1,21 @@
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import React, { FC } from 'react';
-import { useTranslation } from 'next-i18next';
-import { Path } from '@/constants/enums';
-import styled from '@emotion/styled';
-import useSticky from '@/components/hooks/useSticky';
-import { Logo } from '@/components/dataDisplay/Logo';
-import { getBoxShadow } from '@/styles/globals';
-import { css } from '@emotion/react';
-import { Typography } from '@/components/general/Typography';
-import { landingMenu } from '@/constants/mainMenu';
-import { Button } from '@/components/general/Button';
-import { settings } from '@/styles/Settings';
-import { changeTheme } from '@/stores/reducers/user';
-import { store } from '@/lib/LocalStorage';
-import { useAppDispatch, useAppSelector } from '@/stores/reduxHooks';
-import Divider from '@/components/general/Divider/Divider';
+import Link from "next/link";
+import { useRouter } from "next/router";
+import React, { FC } from "react";
+import { useTranslation } from "next-i18next";
+import { Path } from "@/constants/enums";
+import styled from "@emotion/styled";
+import useSticky from "@/components/hooks/useSticky";
+import { Logo } from "@/components/dataDisplay/Logo";
+import { getBoxShadow } from "@/styles/globals";
+import { css } from "@emotion/react";
+import { Typography } from "@/components/general/Typography";
+import { landingMenu } from "@/constants/mainMenu";
+import { Button } from "@/components/general/Button";
+import { settings } from "@/styles/Settings";
+import { changeTheme } from "@/stores/reducers/user";
+import { store } from "@/lib/LocalStorage";
+import { useAppDispatch, useAppSelector } from "@/stores/reduxHooks";
+import Divider from "@/components/general/Divider/Divider";
 
 const { Text } = Typography;
 
@@ -98,17 +98,17 @@ const Header: FC<IHeader> = ({ isLoggedIn }) => {
   const dispatch = useAppDispatch();
   const { isSticky, element } = useSticky();
   const router = useRouter();
-  const { t } = useTranslation('common');
-  const headerClasses = ` ${isSticky ? 'sticky' : ''}`;
+  const { t } = useTranslation("common");
+  const headerClasses = ` ${isSticky ? "sticky" : ""}`;
 
   const changeRoute = (path: Path) => {
     router.push(path);
   };
 
   const changeThemeMode = () => {
-    const newTheme = isDark ? 'light' : 'dark';
+    const newTheme = isDark ? "light" : "dark";
     dispatch(changeTheme(!isDark));
-    store('theme', newTheme);
+    store("theme", newTheme);
   };
 
   return (
@@ -117,7 +117,7 @@ const Header: FC<IHeader> = ({ isLoggedIn }) => {
         <Link href="/">
           <Logo size={3} />
           <Text size="lg" weight="semiBold">
-            Botinow
+            Platfo
           </Text>
         </Link>
       </WrapperLogo>
@@ -126,7 +126,7 @@ const Header: FC<IHeader> = ({ isLoggedIn }) => {
           <Link
             href={menu.path}
             key={menu.key}
-            className={router.pathname == menu.path ? 'active' : ''}
+            className={router.pathname == menu.path ? "active" : ""}
           >
             {t(menu.key)}
           </Link>
@@ -135,7 +135,7 @@ const Header: FC<IHeader> = ({ isLoggedIn }) => {
       <WrapperAction>
         <Button
           color="primary"
-          icon={isDark ? 'Sun' : 'Moon'}
+          icon={isDark ? "Sun" : "Moon"}
           isIconOnly
           onClick={changeThemeMode}
           size="lg"
@@ -144,10 +144,10 @@ const Header: FC<IHeader> = ({ isLoggedIn }) => {
           variant="text"
           className="!mx-3"
         />
-        <Divider isVertical={true} height={'20px'} className="m-auto" />
+        <Divider isVertical={true} height={"20px"} className="m-auto" />
         {isLoggedIn ? (
           <Button
-            title={t('Dashboard')}
+            title={t("Dashboard")}
             color="secondary"
             onClick={() => changeRoute(Path.Accounts)}
             size="sm"
@@ -155,13 +155,13 @@ const Header: FC<IHeader> = ({ isLoggedIn }) => {
         ) : (
           <>
             <Button
-              title={t('login')}
+              title={t("login")}
               variant="text"
               onClick={() => changeRoute(Path.Login)}
               size="sm"
             />
             <Button
-              title={t('register')}
+              title={t("register")}
               color="secondary"
               onClick={() => changeRoute(Path.Register)}
               size="sm"

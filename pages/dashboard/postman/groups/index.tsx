@@ -1,24 +1,24 @@
-import { NextPageWithLayout } from '@/types/next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { DashboardLayout } from '@/components/layouts/DashboardLayout';
-import { postmanMenu } from '@/constants/dashboardMenu';
-import { Tile } from '@/components/dataDisplay/Tile';
-import { Avatar } from '@/components/dataDisplay/Avatar';
-import { useEffect, useState } from 'react';
-import { AxiosResponse } from 'axios';
+import { NextPageWithLayout } from "@/types/next";
+//import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { DashboardLayout } from "@/components/layouts/DashboardLayout";
+import { postmanMenu } from "@/constants/dashboardMenu";
+import { Tile } from "@/components/dataDisplay/Tile";
+import { Avatar } from "@/components/dataDisplay/Avatar";
+import { useEffect, useState } from "react";
+import { AxiosResponse } from "axios";
 import {
   IAccount,
   IContactGroup,
   Res_Account_All,
   Res_Postman_Group_FacebookPageId,
-} from '@/types/api';
-import { Typography } from '@/components/general/Typography';
-import BackdropLoading from '@/components/feedback/BackdropLoading/BackdropLoading';
-import AccountService from '@/services/endpoints/AccountService';
-import { Platform } from '@/constants/enums';
-import PostmanService from '@/services/endpoints/PostmanService';
-import ContactGroupForm from '@/components/pages/ContactGroupForm';
-import { AvatarGroup } from '@/components/dataDisplay/AvatarGroup';
+} from "@/types/api";
+import { Typography } from "@/components/general/Typography";
+import BackdropLoading from "@/components/feedback/BackdropLoading/BackdropLoading";
+import AccountService from "@/services/endpoints/AccountService";
+import { Platform } from "@/constants/enums";
+import PostmanService from "@/services/endpoints/PostmanService";
+import ContactGroupForm from "@/components/pages/ContactGroupForm";
+import { AvatarGroup } from "@/components/dataDisplay/AvatarGroup";
 
 const { Text } = Typography;
 
@@ -165,19 +165,19 @@ const GroupsPage: NextPageWithLayout = () => {
 
 export default GroupsPage;
 
-export const getStaticProps = async ({ locale }: { locale: string }) => {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ['common'])),
-    },
-  };
-};
+// export const getStaticProps = async ({ locale }: { locale: string }) => {
+//   return {
+//     props: {
+//       ...(await serverSideTranslations(locale, ['common'])),
+//     },
+//   };
+// };
 
 GroupsPage.getLayout = (page) => {
   return (
     <DashboardLayout
       topMenu={postmanMenu}
-      meta={{ title: 'Groups' }}
+      meta={{ title: "Groups" }}
       color="postman"
     >
       {page}

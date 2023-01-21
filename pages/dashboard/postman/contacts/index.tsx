@@ -1,30 +1,30 @@
-import { NextPageWithLayout } from '@/types/next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { DashboardLayout } from '@/components/layouts/DashboardLayout';
-import { postmanMenu } from '@/constants/dashboardMenu';
-import { Tile } from '@/components/dataDisplay/Tile';
-import { Avatar } from '@/components/dataDisplay/Avatar';
-import { useTranslation } from 'next-i18next';
-import { useEffect, useState } from 'react';
-import { AxiosResponse } from 'axios';
+import { NextPageWithLayout } from "@/types/next";
+//import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { DashboardLayout } from "@/components/layouts/DashboardLayout";
+import { postmanMenu } from "@/constants/dashboardMenu";
+import { Tile } from "@/components/dataDisplay/Tile";
+import { Avatar } from "@/components/dataDisplay/Avatar";
+import { useTranslation } from "next-i18next";
+import { useEffect, useState } from "react";
+import { AxiosResponse } from "axios";
 import {
   IAccount,
   IContact,
   Res_Account_All,
   Res_LiveChat_Contact_All_PageId,
-} from '@/types/api';
-import { Typography } from '@/components/general/Typography';
-import BackdropLoading from '@/components/feedback/BackdropLoading/BackdropLoading';
-import AccountService from '@/services/endpoints/AccountService';
-import LiveChatService from '@/services/endpoints/LiveChatService';
-import IconText from '@/components/dataDisplay/IconText/IconText';
-import { Path, Platform } from '@/constants/enums';
-import { useRouter } from 'next/router';
+} from "@/types/api";
+import { Typography } from "@/components/general/Typography";
+import BackdropLoading from "@/components/feedback/BackdropLoading/BackdropLoading";
+import AccountService from "@/services/endpoints/AccountService";
+import LiveChatService from "@/services/endpoints/LiveChatService";
+import IconText from "@/components/dataDisplay/IconText/IconText";
+import { Path, Platform } from "@/constants/enums";
+import { useRouter } from "next/router";
 
 const { Text } = Typography;
 
 const ContactsPage: NextPageWithLayout = () => {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
   const [loading, setLoading] = useState(false);
   const [accounts, setAccounts] = useState<Res_Account_All>([]);
   const [contacts, setContacts] = useState<IContact[]>([]);
@@ -69,8 +69,8 @@ const ContactsPage: NextPageWithLayout = () => {
 
   const changeRoute = (contact: IContact) => {
     router.push(
-      Path.PostmanContacts + '/[id]',
-      Path.PostmanContacts + '/' + contact.id
+      Path.PostmanContacts + "/[id]",
+      Path.PostmanContacts + "/" + contact.id
     );
   };
 
@@ -132,7 +132,7 @@ const ContactsPage: NextPageWithLayout = () => {
                 height="280px"
                 click={changeRoute}
                 clickColor="postman"
-                clickLabel={t('details')}
+                clickLabel={t("details")}
               >
                 <div className="flex flex-col text-center w-full">
                   <Text weight="semiBold"> {contact.information.name} </Text>
@@ -162,19 +162,19 @@ const ContactsPage: NextPageWithLayout = () => {
 
 export default ContactsPage;
 
-export const getStaticProps = async ({ locale }: { locale: string }) => {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ['common'])),
-    },
-  };
-};
+// export const getStaticProps = async ({ locale }: { locale: string }) => {
+//   return {
+//     props: {
+//       ...(await serverSideTranslations(locale, ['common'])),
+//     },
+//   };
+// };
 
 ContactsPage.getLayout = (page) => {
   return (
     <DashboardLayout
       topMenu={postmanMenu}
-      meta={{ title: 'Postman' }}
+      meta={{ title: "Postman" }}
       color="postman"
     >
       {page}
