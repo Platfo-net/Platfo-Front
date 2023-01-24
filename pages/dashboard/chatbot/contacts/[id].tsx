@@ -1,14 +1,14 @@
 import { useRouter } from "next/router";
 import { AxiosResponse } from "axios";
 import { useCallback, useEffect, useState } from "react";
-//import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+// import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { chatbotMenu } from "@/constants/dashboardMenu";
 import { NextPageWithLayout } from "@/types/next";
 import { Path } from "@/constants/enums";
 import { DashboardLayout } from "@/components/layouts/DashboardLayout";
 import InfoSection from "@/components/dataDisplay/InfoSection/InfoSection";
 import { Avatar } from "@/components/dataDisplay/Avatar";
-import { GetStaticPaths } from "next";
+import { GetStaticPaths,GetStaticProps } from "next";
 import BackdropLoading from "@/components/feedback/BackdropLoading/BackdropLoading";
 import LiveChatService from "@/services/endpoints/LiveChatService";
 import { IContact, Res_LiveChat_Contact_Id } from "@/types/api";
@@ -117,7 +117,9 @@ export const getStaticPaths: GetStaticPaths<{ id: string }> = async () => {
     fallback: "blocking",
   };
 };
-
+export const getStaticProps: GetStaticProps = async context => {
+  return { props: {} };
+};
 ContactDetailsPage.getLayout = (page) => {
   const updatePostmanMenu = [
     ...chatbotMenu,

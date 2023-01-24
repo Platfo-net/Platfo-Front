@@ -8,7 +8,7 @@ import { Path } from "@/constants/enums";
 import { DashboardLayout } from "@/components/layouts/DashboardLayout";
 import InfoSection from "@/components/dataDisplay/InfoSection/InfoSection";
 import { Avatar } from "@/components/dataDisplay/Avatar";
-import { GetStaticPaths } from "next";
+import { GetStaticPaths,GetStaticProps } from "next";
 import BackdropLoading from "@/components/feedback/BackdropLoading/BackdropLoading";
 import LiveChatService from "@/services/endpoints/LiveChatService";
 import { IContact, Res_LiveChat_Contact_Id } from "@/types/api";
@@ -116,6 +116,9 @@ export const getStaticPaths: GetStaticPaths<{ id: string }> = async () => {
     paths: [],
     fallback: "blocking",
   };
+};
+export const getStaticProps: GetStaticProps = async context => {
+  return { props: {} };
 };
 
 ContactDetailsPage.getLayout = (page) => {

@@ -1,8 +1,9 @@
+
 /** @type {import('next').NextConfig} */
-//const { i18n } = require('./next-i18next.config');
+const { i18n } = require('./next-i18next.config');
 
 const nextConfig = {
-  //i18n,
+  i18n,
   reactStrictMode: false,
   swcMinify: true,
   publicRuntimeConfig: {
@@ -10,7 +11,7 @@ const nextConfig = {
   },
   env: {
     BASE_URL: process.env.BASE_URL,
-    FACEBOOK_ID: process.env.FACEBOOK_ID,
+    FACEBOOK_ID: process.env.FACEBOOK_ID
   },
   images: {
     remotePatterns: [

@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { AxiosResponse } from "axios";
 import { useCallback, useEffect, useState } from "react";
-//import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+// import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { accountsMenu } from "@/constants/dashboardMenu";
 import { NextPageWithLayout } from "@/types/next";
 import { Application, Path } from "@/constants/enums";
@@ -16,7 +16,7 @@ import { Typography } from "@/components/general/Typography";
 import TileButton from "@/components/general/TileButton/TileButton";
 import { Tile } from "@/components/dataDisplay/Tile";
 import { Modal } from "@/components/feedback/Modal";
-import { GetStaticPaths } from "next";
+import { GetStaticPaths,GetStaticProps } from "next";
 import BackdropLoading from "@/components/feedback/BackdropLoading/BackdropLoading";
 
 const { Text, Title } = Typography;
@@ -166,6 +166,9 @@ export const getStaticPaths: GetStaticPaths<{ id: string }> = async () => {
     paths: [],
     fallback: "blocking",
   };
+};
+export const getStaticProps: GetStaticProps = async context => {
+  return { props: {} };
 };
 
 AccountDetailsPage.getLayout = (page) => {
