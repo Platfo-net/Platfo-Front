@@ -329,6 +329,20 @@ module.exports = require("next/config");
 
 /***/ }),
 
+/***/ 3918:
+/***/ ((module) => {
+
+module.exports = require("next/dist/shared/lib/amp-context.js");
+
+/***/ }),
+
+/***/ 5732:
+/***/ ((module) => {
+
+module.exports = require("next/dist/shared/lib/amp-mode.js");
+
+/***/ }),
+
 /***/ 3280:
 /***/ ((module) => {
 
@@ -340,13 +354,6 @@ module.exports = require("next/dist/shared/lib/app-router-context.js");
 /***/ ((module) => {
 
 module.exports = require("next/dist/shared/lib/head-manager-context.js");
-
-/***/ }),
-
-/***/ 4957:
-/***/ ((module) => {
-
-module.exports = require("next/dist/shared/lib/head.js");
 
 /***/ }),
 
@@ -539,10 +546,24 @@ module.exports = require("next/dist/shared/lib/router/utils/route-regex.js");
 
 /***/ }),
 
+/***/ 2470:
+/***/ ((module) => {
+
+module.exports = require("next/dist/shared/lib/side-effect.js");
+
+/***/ }),
+
 /***/ 9232:
 /***/ ((module) => {
 
 module.exports = require("next/dist/shared/lib/utils.js");
+
+/***/ }),
+
+/***/ 618:
+/***/ ((module) => {
+
+module.exports = require("next/dist/shared/lib/utils/warn-once.js");
 
 /***/ }),
 
@@ -609,7 +630,7 @@ module.exports = import("axios");;
 var __webpack_require__ = require("../../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [676,61,339,745,426,719,228,256,420,484,23], () => (__webpack_exec__(2100)));
+var __webpack_exports__ = __webpack_require__.X(0, [121,676,61,339,745,426,719,228,256,420,484,23], () => (__webpack_exec__(2100)));
 module.exports = __webpack_exports__;
 
 })();

@@ -64,7 +64,7 @@ var jsx_runtime_ = __webpack_require__(997);
 // EXTERNAL MODULE: external "react"
 var external_react_ = __webpack_require__(6689);
 ;// CONCATENATED MODULE: ./assets/svg/platfo-logo-N.svg
-/* harmony default export */ const platfo_logo_N = ({"src":"/_next/static/media/platfo-logo-N.598bf867.svg","height":4899,"width":4811});
+/* harmony default export */ const platfo_logo_N = ({"src":"/_next/static/media/platfo-logo-N.673c28ac.svg","height":4899,"width":4811});
 // EXTERNAL MODULE: external "@emotion/styled"
 var styled_ = __webpack_require__(1480);
 var styled_default = /*#__PURE__*/__webpack_require__.n(styled_);
