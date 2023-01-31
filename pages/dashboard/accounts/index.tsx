@@ -1,5 +1,5 @@
 import { NextPageWithLayout } from "@/types/next";
-//import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { DashboardLayout } from "@/components/layouts/DashboardLayout";
 import { accountsMenu } from "@/constants/dashboardMenu";
 import { Tile } from "@/components/dataDisplay/Tile";
@@ -52,10 +52,12 @@ const AccountsPage: NextPageWithLayout = () => {
   };
 
   const addAccount = () => {
+    console.log('Good to see you');
     try {
       setLoading(true);
       window.FB.login(
         async (response: any) => {
+          console.log('nice');
           if (response.authResponse) {
             const data = {
               facebook_user_id: response.authResponse.userID,
@@ -129,13 +131,6 @@ const AccountsPage: NextPageWithLayout = () => {
 
 export default AccountsPage;
 
-// export const getStaticProps = async ({ locale }: { locale: string }) => {
-//   return {
-//     props: {
-//       ...(await serverSideTranslations(locale, ['common'])),
-//     },
-//   };
-// };
 
 AccountsPage.getLayout = (page) => {
   return (

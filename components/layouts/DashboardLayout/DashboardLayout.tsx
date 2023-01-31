@@ -75,6 +75,7 @@ export const DashboardLayout: FC<IDashboardLayout> = ({
       window.FB.init({
         appId: '448865257100176',
         autoLogAppEvents: true,
+        cookie: true,
         xfbml: true,
         version: 'v14.0',
       });
