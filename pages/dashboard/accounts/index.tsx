@@ -62,15 +62,15 @@ const AccountsPage: NextPageWithLayout = () => {
       });
 
       window.FB.login(
-        async function (response: any) {
+         function (response: any) {
           console.log('nice try');
           if (response.authResponse) {
             const data = {
               facebook_user_id: response.authResponse.userID,
               facebook_user_token: response.authResponse.accessToken,
             };
-            await InstagramService.postToConnectInstagram(data);
-            await getAccounts();
+            InstagramService.postToConnectInstagram(data);
+            getAccounts();
             window.FB.api('/me', function (response: any) {
               console.log('Good to see you, ' + response.name + '.');
             });
