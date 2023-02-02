@@ -1,5 +1,5 @@
 import React from "react";
-import BrandLogo from "../../../assets/svg/platfo-logo-N.svg";
+import BrandLogo from "../../../assets/svg/platfo-logo.svg";
 import styled from "@emotion/styled";
 import { css, SerializedStyles } from "@emotion/react";
 import { Image } from "../Image";

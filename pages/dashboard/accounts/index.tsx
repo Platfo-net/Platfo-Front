@@ -1,5 +1,5 @@
 import { NextPageWithLayout } from "@/types/next";
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+// import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { DashboardLayout } from "@/components/layouts/DashboardLayout";
 import { accountsMenu } from "@/constants/dashboardMenu";
 import { Tile } from "@/components/dataDisplay/Tile";
@@ -55,9 +55,11 @@ const AccountsPage: NextPageWithLayout = () => {
     console.log('Good to see you');
     try {
       setLoading(true);
+      console.log('nice');
+
       window.FB.login(
         async (response: any) => {
-          console.log('nice');
+          console.log('nice try');
           if (response.authResponse) {
             const data = {
               facebook_user_id: response.authResponse.userID,
@@ -65,9 +67,9 @@ const AccountsPage: NextPageWithLayout = () => {
             };
             await InstagramService.postToConnectInstagram(data);
             await getAccounts();
-            // FB.api('/me', function (response) {
-            //   console.log('Good to see you, ' + response.name + '.');
-            // });
+            window.FB.api('/me', function (response: any) {
+              console.log('Good to see you, ' + response.name + '.');
+            });
             setLoading(false);
           } else {
             setLoading(false);
@@ -75,8 +77,7 @@ const AccountsPage: NextPageWithLayout = () => {
         },
         {
           scope:
-            "public_profile,email,pages_show_list,pages_manage_metadata,pages_read_engagement," +
-            "instagram_manage_messages,instagram_basic",
+            "public_profile,email",
         }
       );
     } catch (e) {
