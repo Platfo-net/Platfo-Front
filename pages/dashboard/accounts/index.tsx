@@ -62,7 +62,7 @@ const AccountsPage: NextPageWithLayout = () => {
       });
 
       window.FB.login(
-        async (response: any) => {
+        async function (response: any) {
           console.log('nice try');
           if (response.authResponse) {
             const data = {
