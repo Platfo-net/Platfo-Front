@@ -57,6 +57,10 @@ const AccountsPage: NextPageWithLayout = () => {
       setLoading(true);
       console.log('nice');
 
+      window.FB.getLoginStatus(function(response: any) {
+        console.log(response);
+      });
+
       window.FB.login(
         async (response: any) => {
           console.log('nice try');
@@ -80,9 +84,12 @@ const AccountsPage: NextPageWithLayout = () => {
             "public_profile,email",
         }
       );
+      console.log('Good to see you');
+
     } catch (e) {
       setLoading(false);
     }
+    console.log('Good you');
   };
 
   useEffect(() => {
