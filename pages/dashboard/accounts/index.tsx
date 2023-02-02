@@ -52,7 +52,7 @@ const AccountsPage: NextPageWithLayout = () => {
   };
 
   const addAccount = () => {
-    console.log('new version');
+    console.log('new version for all');
     try {
       setLoading(true);
       console.log('nice');
