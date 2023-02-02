@@ -56,11 +56,7 @@ const AccountsPage: NextPageWithLayout = () => {
     try {
       setLoading(true);
       console.log('nice');
-
-      window.FB.getLoginStatus(function(response: any) {
-        console.log(response);
-      });
-
+      
       window.FB.login(
          function (response: any) {
           console.log('nice try');
