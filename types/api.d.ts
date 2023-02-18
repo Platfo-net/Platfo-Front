@@ -92,8 +92,9 @@ export interface IChatflow {
 export type Res_BotBuilder_Chatflow_All = IChatflow[];
 
 export interface IParams_Pagination {
-  page: number;
-  page_size: number;
+  page?: number;
+  page_size?: number;
+  facebook_page_id: string
 }
 
 export interface INotification {
@@ -152,14 +153,38 @@ export type Body_Postman_Group = {
   }[];
 };
 
-export interface ICampaign {
-  id: string;
+
+export type Body_Postman_Campaign = {
   name: string;
   description: string;
-  created_at: string;
   status: string;
   is_draft: boolean;
+  group_id: string;
+  facebook_page_id: string;
+  content: Object;
+};
+
+export interface ICampaign {
+  id :string
+  name: string;
+  description: string;
+  status: string;
+  is_draft: Boolean;
   group_name: string;
+  facebook_page_id: string;
+  account: {
+    id: string;
+    username: string;
+    platform: string;
+    profile_image: string;
+    page_id: string;
+  };
+  content: object;
+  user_id: string;
+  contacts: [string];
+  sent_count: number;
+  seen_count: number;
+  total_contact_count: number;
 }
 export type Res_Postman_Campaign_FacebookPageId = {
   items: ICampaign[];
