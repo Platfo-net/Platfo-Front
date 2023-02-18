@@ -61,6 +61,7 @@ const GroupsPage: NextPageWithLayout = () => {
 
   const changeSelectedAccount = async (account: IAccount) => {
     await getGroups(account.page_id);
+
     setSelectedAccount(account);
   };
 
@@ -70,7 +71,9 @@ const GroupsPage: NextPageWithLayout = () => {
       await PostmanService.deleteGroup(group.id);
       await getAccounts();
       setLoading(false);
+      await getGroups(selectedAccount?.page_id)
     } catch (e) {
+      await getGroups(selectedAccount?.page_id)
       setLoading(false);
     }
   };
@@ -86,6 +89,7 @@ const GroupsPage: NextPageWithLayout = () => {
       }
     })();
   }, []);
+  
 
   return (
     <>
