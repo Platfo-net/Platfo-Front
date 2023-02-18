@@ -101,7 +101,6 @@ export const postmanMenu: IMenu[] = [
   {
     key: "campaign",
     path: Path.Chatbot,
-    isDisable: true,
   },
   {
     key: "groups",
