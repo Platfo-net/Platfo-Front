@@ -25,7 +25,7 @@ const CampaignsPage: NextPageWithLayout = () => {
   const [campaigns, setCampaigns] = useState<ICampaign[]>([]);
   const [selectedAccount, setSelectedAccount] = useState<IAccount>();
 
-  const [selectedCampaignId , setSelectedCampaignId] = useState<string | null>(null)
+  const [selectedCampaignId, setSelectedCampaignId] = useState<string | null>(null);
 
   const { t } = useTranslation("common");
 
@@ -50,9 +50,24 @@ const CampaignsPage: NextPageWithLayout = () => {
   const getCampaigns = async (pageId: string) => {
     try {
       setLoading(true);
-      const response: AxiosResponse<Res_Postman_Campaign_FacebookPageId> = await PostmanService.getCampaigns({facebook_page_id:pageId});
+      const response: AxiosResponse<Res_Postman_Campaign_FacebookPageId> = await PostmanService.getCampaigns({
+        facebook_page_id: pageId,
+      });
       console.log(response.data);
       setCampaigns(response.data.items);
+      setLoading(false);
+    } catch (e) {
+      setLoading(false);
+    }
+  };
+
+  const getCampaign = async (campaignId: string) => {
+    try {
+      setLoading(true);
+      const response: AxiosResponse<Res_Postman_Campaign_FacebookPageId> = await PostmanService.getCampaignById(
+        campaignId
+      );
+      console.log(response.data);
       setLoading(false);
     } catch (e) {
       setLoading(false);
@@ -102,10 +117,10 @@ const CampaignsPage: NextPageWithLayout = () => {
       )}
 
       <div className="flex flex-wrap">
-        <CampaignDetails campaignId={selectedCampaignId} handleCloseModal={() => setSelectedCampaignId(null)} />
+        <CampaignDetails campaignId={selectedCampaignId} handleCloseModal={() => setSelectedCampaignId(null)}  />
         {selectedAccount && (
           <div className="basis-1/6 m-3 ">
-            <CampaignForm submitCallback={getCampaigns} />
+            <CampaignForm page_id={selectedAccount.page_id} submitCallback={getCampaigns} />
           </div>
         )}
         {campaigns?.map((campaign) => {
@@ -120,7 +135,7 @@ const CampaignsPage: NextPageWithLayout = () => {
                   <Text className="mt-5" weight="semiBold">
                     {new Date(campaign.created_at).toLocaleDateString("en")}
                   </Text>
-                  {/* <Button
+                  <Button
                     type="button"
                     className="mx-6"
                     width="full"
@@ -128,7 +143,7 @@ const CampaignsPage: NextPageWithLayout = () => {
                     color="postman"
                     variant="contained"
                     onClick={() => setSelectedCampaignId(campaign.id)}
-                  /> */}
+                  />
                 </div>
               </Tile>
             </div>

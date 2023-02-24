@@ -100,7 +100,7 @@ export const chatbotMenu: IMenu[] = [
 export const postmanMenu: IMenu[] = [
   {
     key: "campaign",
-    path: Path.Chatbot,
+    path: Path.Campaign,
   },
   {
     key: "groups",

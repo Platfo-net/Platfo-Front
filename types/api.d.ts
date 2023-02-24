@@ -161,7 +161,9 @@ export type Body_Postman_Campaign = {
   is_draft: boolean;
   group_id: string;
   facebook_page_id: string;
-  content: Object;
+  content: {
+    title: string;
+  };
 };
 
 export interface ICampaign {
@@ -170,6 +172,7 @@ export interface ICampaign {
   description: string;
   status: string;
   is_draft: Boolean;
+  created_at:string;
   group_name: string;
   facebook_page_id: string;
   account: {

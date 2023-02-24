@@ -14,6 +14,7 @@ export enum Path {
   PostmanContacts = '/dashboard/postman/contacts',
   Accounts = '/dashboard/accounts',
   Profile = '/dashboard/profile',
+  Campaign = "/dashboard/postman/campaign"
 }
 
 export enum Platform {

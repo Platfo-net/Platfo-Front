@@ -13,7 +13,7 @@ import { Avatar } from "@/components/dataDisplay/Avatar";
 
 interface IProps {
   pageId: string;
-  change: () => void;
+  change: (pageId:string) => void;
 }
 const ContactGroupForm: FC<IProps> = ({ pageId, change }) => {
   const {
@@ -64,6 +64,7 @@ const ContactGroupForm: FC<IProps> = ({ pageId, change }) => {
       setLoading(false);
       setOpenModal(false);
       resetForm()
+      change(pageId)
     } catch (e) {
       setLoading(false);
     }

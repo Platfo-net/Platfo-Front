@@ -1,17 +1,14 @@
-import React, { ChangeEvent, FC, useEffect, useMemo, useState } from "react";
+import React, { FC, useEffect, useMemo, useState } from "react";
 import { Input } from "@/components/dataEntry/Input/Input";
-import { useForm, Controller } from "react-hook-form";
-import { Body_Postman_Campaign, IAccount, Res_Account_All, Res_Postman_Group_FacebookPageId } from "@/types/api";
+import { useForm } from "react-hook-form";
+import { Body_Postman_Campaign, IContactGroup, Res_Postman_Group_FacebookPageId } from "@/types/api";
 import { useTranslation } from "next-i18next";
 import { Modal } from "@/components/feedback/Modal";
 import TileButton from "@/components/general/TileButton/TileButton";
 import { AxiosResponse } from "axios";
 import PostmanService from "@/services/endpoints/PostmanService";
-import AccountService from "@/services/endpoints/AccountService";
-import { Avatar } from "@/components/dataDisplay/Avatar";
 import { Button } from "../general/Button";
 import { Tile } from "../dataDisplay/Tile";
-import { Platform } from "@/constants/enums";
 import { Typography } from "@/components/general/Typography";
 import { CheckBox } from "../dataEntry/CheckBox";
 
@@ -21,11 +18,12 @@ import { AvatarGroup } from "../dataDisplay/AvatarGroup";
 
 const { Text } = Typography;
 
-interface IProps  {
+interface IProps {
   submitCallback: Function;
-};
+  page_id: string;
+}
 
-const CampaignForm: FC<IProps> = ({ submitCallback }) => {
+const CampaignForm: FC<IProps> = ({ submitCallback, page_id }) => {
   const {
     register,
     handleSubmit,
@@ -39,14 +37,11 @@ const CampaignForm: FC<IProps> = ({ submitCallback }) => {
   const [stepNum, setStepNum] = useState(0);
 
   const [groups, setGroups] = useState<IContactGroup[]>([]);
-  const [accounts, setAccounts] = useState<IAccount[]>([]);
 
-  const [selectedAccountId, setSelectedAccountId] = useState<string | null>();
   const [selectedGroupId, setSelectedGroupId] = useState<string | null>(null);
 
   const modalHandler = () => setOpenModal(!openModal);
 
-  const handleSelectAccount = (accountId: string | null) => setSelectedAccountId(accountId);
   const handleSelectGroup = (groupId: string | null) => setSelectedGroupId(groupId);
 
   const getGroups = async (pageId: string) => {
@@ -61,22 +56,11 @@ const CampaignForm: FC<IProps> = ({ submitCallback }) => {
     }
   };
 
-  const getAccounts = async () => {
-    try {
-      setLoading(true);
-      const response: AxiosResponse<Res_Account_All> = await AccountService.getAccounts();
-      setAccounts(response.data);
-      setLoading(false);
-    } catch (e) {
-      setLoading(false);
-    }
-  };
-
   const createCampaign = async (data: Body_Postman_Campaign) => {
     try {
       setLoading(true);
       const response: AxiosResponse<any> = await PostmanService.postCampaign(data);
-      console.log(response);
+      console.log(response)
     } catch (e) {
       console.log(e);
       setLoading(false);
@@ -87,94 +71,40 @@ const CampaignForm: FC<IProps> = ({ submitCallback }) => {
     setLoading(false);
     setStepNum(0);
     setGroups([]);
-    setAccounts([]);
-    setSelectedAccountId(null);
     setSelectedGroupId(null);
   };
 
   const submit = async (formState: Body_Postman_Campaign) => {
-    const { name, description } = formState;
-    if (!selectedAccountId || !selectedAccountId) return;
+    const { name, description, content } = formState;
+    if (!page_id || !selectedGroupId) return;
 
     const campaignData: Body_Postman_Campaign = {
       name,
       description,
-      facebook_page_id: selectedAccountId,
+      facebook_page_id: page_id,
       status: "active",
-      group_id: selectedAccountId,
-      content: {
-        title: description,
-      },
+      group_id: selectedGroupId,
+      content,
       is_draft: false,
     };
 
     await createCampaign(campaignData);
-    submitCallback(selectedAccountId)
+    submitCallback(page_id);
     resetStates();
     modalHandler();
   };
 
   const cancel = () => {
-    submitCallback(selectedAccountId)
+    submitCallback(page_id);
     resetStates();
     modalHandler();
   };
 
   useEffect(() => {
-    if (openModal) getAccounts();
-  }, [openModal]);
-  const handleChooseAccountNextStep = () => {
-    if (!selectedAccountId) return;
-    getGroups(selectedAccountId);
+    if (!openModal) return;
+    getGroups(page_id);
     handleSelectGroup(null);
-    handleNextStep();
-  };
-
-  const ChooseAccountStep: FC = () => {
-    return (
-      <div>
-        <h2>{t("choose-account")}</h2>
-        <div className="flex w-full overflow-x-scroll">
-          {loading ? (
-            <div className="flex w-full justify-center">
-              <LoadingCircle size="6xl" />
-            </div>
-          ) : (
-            accounts.map((account) => {
-              return (
-                <div className="relative">
-                  <div onClick={() => handleSelectAccount(account.page_id)} className="basis-1/6 m-3" key={account.id}>
-                    <Tile
-                      data={account}
-                      avatar={
-                        <>
-                          <Avatar
-                            url={account.profile_image}
-                            size={6}
-                            type="image"
-                            icon={Platform[account.platform as unknown as keyof typeof Platform]}
-                          />
-                        </>
-                      }
-                      width="150px"
-                      height="150px"
-                      clickColor="secondary"
-                      clickLabel={t("details")}
-                    >
-                      <Text weight="semiBold"> {account.username} </Text>
-                    </Tile>
-                    <div className="absolute top-5">
-                      <CheckBox checked={selectedAccountId === account.page_id} />
-                    </div>
-                  </div>
-                </div>
-              );
-            })
-          )}
-        </div>
-      </div>
-    );
-  };
+  }, [openModal]);
 
   const ChooseGroupStep: FC = () => {
     return (
@@ -216,56 +146,47 @@ const CampaignForm: FC<IProps> = ({ submitCallback }) => {
 
   const ChooseContentStep: FC = () => {
     return (
-      <div className="flex flex-col">
-        <div className="flex-auto m-auto w-4/5">
-          <Input
-            label={t("name")}
-            color={errors.name?.message ? "danger" : "default"}
-            {...register("name", {
-              required: t("error-required-field"),
-            })}
-          />
-        </div>
+      <div>
+        <h2>{t("choose-content")}</h2>
+        <div className="flex flex-col">
+          <div className="flex-auto m-auto w-4/5">
+            <Input
+              label={t("name")}
+              color={errors.name?.message ? "danger" : "default"}
+              {...register("name", {
+                required: t("error-required-field"),
+              })}
+            />
+          </div>
 
-        <div className="flex-auto m-auto w-4/5 ">
-          <TextArea
-            rows={4}
-            label={t("description")}
-            color={errors.name?.message ? "danger" : "default"}
-            {...register("description", {
-              required: t("error-required-field"),
-            })}
-          />
+          <div className="flex-auto m-auto w-4/5 ">
+            <Input
+              label={t("description")}
+              color={errors.name?.message ? "danger" : "default"}
+              {...register("description", {
+                required: t("error-required-field"),
+              })}
+            />
+          </div>
+
+          <div className="flex-auto m-auto w-4/5 ">
+            <TextArea
+              rows={3}
+              label={t("content")}
+              color={errors.name?.message ? "danger" : "default"}
+              {...register("content.title", {
+                required: t("error-required-field"),
+              })}
+            />
+          </div>
         </div>
       </div>
-    );
-  };
-
-  const ChooseAccountStepButtons: FC = () => {
-    return (
-      <>
-        <div className="mx-1">
-          <Button
-            isDisable={!selectedAccountId}
-            onClick={handleChooseAccountNextStep}
-            size="sm"
-            color="postman"
-            title="Next"
-          />
-        </div>
-        <div className="mx-1">
-          <Button onClick={cancel} size="sm" color="secondary" title="Cancel" />
-        </div>
-      </>
     );
   };
 
   const ChooseGroupStepButtons: FC = () => {
     return (
       <>
-        <div className="mx-1">
-          <Button onClick={handlePrevStep} size="sm" color="postman" title="Prev" />
-        </div>
         <div className="mx-1">
           <Button isDisable={!selectedGroupId} onClick={handleNextStep} size="sm" color="postman" title="Next" />
         </div>
@@ -292,8 +213,8 @@ const CampaignForm: FC<IProps> = ({ submitCallback }) => {
     );
   };
 
-  const createCampaignSteps: FC[] = [ChooseAccountStep, ChooseGroupStep, ChooseContentStep];
-  const createCampaignButtons: FC[] = [ChooseAccountStepButtons, ChooseGroupStepButtons, ChooseContentStepButtons];
+  const createCampaignSteps: FC[] = [ChooseGroupStep, ChooseContentStep];
+  const createCampaignButtons: FC[] = [ChooseGroupStepButtons, ChooseContentStepButtons];
 
   const isFirstStep = useMemo(() => stepNum === 0, [stepNum]);
   const isLastStep = useMemo(() => stepNum === createCampaignSteps.length - 1, [stepNum]);
@@ -304,9 +225,9 @@ const CampaignForm: FC<IProps> = ({ submitCallback }) => {
     <>
       <TileButton title={t("add-new-group")} onClick={modalHandler} />
       <form onSubmit={handleSubmit(submit)}>
-        <Modal isVisible={openModal} width="50%" isLoading={loading}>
-          <div className="w-full">
-            <div className="container p-4" style={{ minHeight: "250px" }}>
+        <Modal isVisible={openModal} width="max(800px , 50%)" height="350px" isLoading={loading}>
+          <div className="w-full flex flex-col justify-between	h-full" style={{ height: 320 }}>
+            <div className="container" style={{ minHeight: "250px" }}>
               {loading ? (
                 <div className="flex w-full justify-center items-center h-48">
                   <LoadingCircle size="6xl" />
