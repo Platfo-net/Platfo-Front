@@ -176,7 +176,7 @@ export interface ICampaign {
   description: string;
   status: string;
   is_draft: Boolean;
-  created_at:string;
+  created_at:Date;
   group_name: string;
   facebook_page_id: string;
   account: {
@@ -186,7 +186,10 @@ export interface ICampaign {
     profile_image: string;
     page_id: string;
   };
-  content: object;
+  content: {
+    object
+    title:string
+  };
   user_id: string;
   contacts: [string];
   sent_count: number;

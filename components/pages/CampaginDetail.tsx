@@ -1,9 +1,8 @@
-import TileButton from "../general/TileButton/TileButton";
 import { FC, useEffect, useMemo, useState } from "react";
 import { Modal } from "../feedback/Modal";
 import LoadingCircle from "../feedback/loading/LoadingCircle/LoadingCircle";
 import { AxiosResponse } from "axios";
-import { ICampaign, Res_Postman_Campaign_FacebookPageId } from "@/types/api";
+import { ICampaign } from "@/types/api";
 import PostmanService from "@/services/endpoints/PostmanService";
 import { useTranslation } from "next-i18next";
 import { Button } from "../general/Button";
@@ -11,10 +10,9 @@ import { Button } from "../general/Button";
 interface IProps {
   campaignId: string | null;
   handleCloseModal: () => void;
-  handleEditCampaign: (campaignId : string) => void;
 }
 
-const CampaignDetails: FC<IProps> = ({ campaignId, handleCloseModal , handleEditCampaign}) => {
+const CampaignDetails: FC<IProps> = ({ campaignId, handleCloseModal}) => {
   const isModalOpen = useMemo(() => !!campaignId, [campaignId]);
   const { t } = useTranslation("common");
 
@@ -86,7 +84,7 @@ const CampaignDetails: FC<IProps> = ({ campaignId, handleCloseModal , handleEdit
 
                     <div className="flex justify-between w-full my-2">
                       <span>{t("created-at")}</span>
-                      <span>{new Date(campaign?.created_at).toLocaleDateString("en")}</span>
+                      <span>{new Date(campaign?.created_at ?? "").toLocaleDateString("en")}</span>
                     </div>
 
                     <div className="w-full flex justify-center">

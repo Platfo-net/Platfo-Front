@@ -16,7 +16,7 @@ import { css, SerializedStyles } from '@emotion/react';
 export interface ICheckBox {
   label?: string;
   color?: Color;
-  checked: boolean;
+  checked?: boolean;
   size?: Size;
   variant?: Variant;
   className?: string;

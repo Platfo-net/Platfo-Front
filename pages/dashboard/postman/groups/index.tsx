@@ -66,6 +66,7 @@ const GroupsPage: NextPageWithLayout = () => {
   };
 
   const removeGroup = async (group: IContactGroup) => {
+    if(!selectedAccount?.page_id) return 
     try {
       setLoading(true);
       await PostmanService.deleteGroup(group.id);
