@@ -166,7 +166,7 @@ export type Body_Postman_Campaign = {
     filename: string;
   };
   content: {
-    title: string;
+    text: string;
   };
 };
 
@@ -188,7 +188,7 @@ export interface ICampaign {
   };
   content: {
     object
-    title:string
+    text:string
   };
   user_id: string;
   contacts: [string];

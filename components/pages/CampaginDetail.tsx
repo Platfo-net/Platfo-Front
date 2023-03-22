@@ -59,7 +59,7 @@ const CampaignDetails: FC<IProps> = ({ campaignId, handleCloseModal}) => {
 
                     <div className="flex justify-between w-full my-2">
                       <span>{t("content")}</span>
-                      <span>{campaign?.content.title}</span>
+                      <span>{campaign?.content.text}</span>
                     </div>
 
                     <div className="flex justify-between w-full my-2">

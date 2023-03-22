@@ -202,7 +202,7 @@ const CampaignForm: FC<IProps> = ({ submitCallback, page_id }) => {
               rows={3}
               label={t("content")}
               color={errors.name?.message ? "danger" : "default"}
-              {...register("content.title", {
+              {...register("content.text", {
                 required: t("error-required-field"),
               })}
             />
