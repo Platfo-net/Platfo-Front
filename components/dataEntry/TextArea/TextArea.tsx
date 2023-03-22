@@ -65,15 +65,19 @@ const StyledTextArea = styled.textarea<StyledTextAreaType>`
   padding: 0.8rem;
 `;
 
-type WrapperType = Pick<ITextArea, "width">;
-const Wrapper = styled.div<WrapperType>`
+type prp = {
+  width: string;
+  rows: number;
+}
+
+const Wrapper = styled.div<prp>`
   position: relative;
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
   transition: ${settings.transition};
   width: ${({ width }) => (width ? width : "100%")};
-  height: ${({ rows = 1 }) => (rows * 20) + 100}px;
+  height: ${({ rows = 1 }) => Number(rows) * 20 + 100}px ;
   span {
     margin-left: 0.5rem;
     margin-right: 0.5rem;
@@ -114,7 +118,7 @@ export const TextArea: React.FC<ITextArea> = forwardRef(
     ref
   ) => {
     return (
-      <Wrapper className={className}>
+      <Wrapper width={width} rows={rows} className={className}>
         <Typography.Text size={size}>{label}</Typography.Text>
         <div className="flex relative">
           <StyledTextArea
