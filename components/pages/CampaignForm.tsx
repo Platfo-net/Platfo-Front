@@ -1,7 +1,7 @@
-import React, { FC, useEffect, useMemo, useState } from "react";
+import React, { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { Input } from "@/components/dataEntry/Input/Input";
 import { useForm } from "react-hook-form";
-import { Body_Postman_Campaign, IContactGroup, Res_Postman_Group_FacebookPageId } from "@/types/api";
+import { Body_Postman_Campaign, file, IContactGroup, Res_file, Res_Postman_Group_FacebookPageId } from "@/types/api";
 import { useTranslation } from "next-i18next";
 import { Modal } from "@/components/feedback/Modal";
 import TileButton from "@/components/general/TileButton/TileButton";
@@ -15,6 +15,8 @@ import { CheckBox } from "../dataEntry/CheckBox";
 import LoadingCircle from "../feedback/loading/LoadingCircle/LoadingCircle";
 import { TextArea } from "../dataEntry/TextArea/TextArea";
 import { AvatarGroup } from "../dataDisplay/AvatarGroup";
+import { useDropzone } from "react-dropzone";
+import fileService from "@/services/endpoints/FileService";
 
 const { Text } = Typography;
 
@@ -33,8 +35,10 @@ const CampaignForm: FC<IProps> = ({ submitCallback, page_id }) => {
   const { t } = useTranslation("common");
 
   const [loading, setLoading] = useState(false);
+  const [fileLoading, setFileLoading] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [stepNum, setStepNum] = useState(0);
+  const [imageId, setImageId] = useState<string | null>(null);
 
   const [groups, setGroups] = useState<IContactGroup[]>([]);
 
@@ -43,6 +47,27 @@ const CampaignForm: FC<IProps> = ({ submitCallback, page_id }) => {
   const modalHandler = () => setOpenModal(!openModal);
 
   const handleSelectGroup = (groupId: string | null) => setSelectedGroupId(groupId);
+
+  const uploadPhoto = async (file: file) => {
+    try {
+      setFileLoading(true);
+      const response: AxiosResponse<Res_file> = await fileService.uploadCampaignPhoto(file);
+      setImageId(response.data.filename);
+    } catch (e) {
+      console.log(e);
+      setFileLoading(false);
+    }
+  };
+
+  const onDrop = useCallback((acceptedFiles: any) => {
+    const [file] = acceptedFiles;
+    const photoRegexp = new RegExp("([a-z-_0-9/:.]*.(jpg|jpeg|png|gif))", "i");
+    const { name } = file;
+    if (!photoRegexp.test(name)) return;
+    uploadPhoto(file);
+  }, []);
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   const getGroups = async (pageId: string) => {
     try {
@@ -60,7 +85,7 @@ const CampaignForm: FC<IProps> = ({ submitCallback, page_id }) => {
     try {
       setLoading(true);
       const response: AxiosResponse<any> = await PostmanService.postCampaign(data);
-      console.log(response)
+      console.log(response);
     } catch (e) {
       console.log(e);
       setLoading(false);
@@ -76,7 +101,7 @@ const CampaignForm: FC<IProps> = ({ submitCallback, page_id }) => {
 
   const submit = async (formState: Body_Postman_Campaign) => {
     const { name, description, content } = formState;
-    if (!page_id || !selectedGroupId) return;
+    if (!page_id || !selectedGroupId || !imageId) return;
 
     const campaignData: Body_Postman_Campaign = {
       name,
@@ -84,7 +109,10 @@ const CampaignForm: FC<IProps> = ({ submitCallback, page_id }) => {
       facebook_page_id: page_id,
       status: "active",
       group_id: selectedGroupId,
-      content,
+      image: {
+        filename: imageId
+      },
+      content ,
       is_draft: false,
     };
 
@@ -179,6 +207,24 @@ const CampaignForm: FC<IProps> = ({ submitCallback, page_id }) => {
               })}
             />
           </div>
+
+          <div className="flex-auto m-auto w-4/5 ">
+            <p>{t("upload-your-photo")}</p>
+            <div {...getRootProps()}>
+              <input {...getInputProps()} />
+
+              <div
+                style={{
+                  borderRadius: ".8rem",
+                  border: "2px dotted gray",
+                  height: "5rem",
+                  background: "white",
+                  boxShadow: "0px 7px 28px rgb(170 170 170 / 25%), 0px 6px 10px rgb(120 120 120 / 12%)",
+                }}
+                className="w-full p-4"
+              ></div>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -225,8 +271,8 @@ const CampaignForm: FC<IProps> = ({ submitCallback, page_id }) => {
     <>
       <TileButton title={t("add-new-group")} onClick={modalHandler} />
       <form onSubmit={handleSubmit(submit)}>
-        <Modal isVisible={openModal} width="max(800px , 50%)" height="350px" isLoading={loading}>
-          <div className="w-full flex flex-col justify-between	h-full" style={{ height: 320 }}>
+        <Modal isVisible={openModal} width="max(800px , 50%)" height="500px" isLoading={loading}>
+          <div className="w-full flex flex-col justify-between	h-full" style={{ height: 460 }}>
             <div className="container" style={{ minHeight: "250px" }}>
               {loading ? (
                 <div className="flex w-full justify-center items-center h-48">

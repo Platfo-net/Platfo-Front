@@ -1,4 +1,5 @@
 import { Application, Platform } from '@/constants/enums';
+import { StoryIndex } from '@storybook/store';
 
 export type Pagination = {
   page: number;
@@ -161,6 +162,9 @@ export type Body_Postman_Campaign = {
   is_draft: boolean;
   group_id: string;
   facebook_page_id: string;
+  image: {
+    filename: string;
+  };
   content: {
     title: string;
   };
@@ -192,4 +196,20 @@ export interface ICampaign {
 export type Res_Postman_Campaign_FacebookPageId = {
   items: ICampaign[];
   pagination: Pagination;
+};
+
+export type file = {
+  path: string;
+  lastModified: number; // timestamp
+  lastModifiedDate: Date;
+  name: string;
+  size: number;
+  type: string;
+  webkitRelativePath: string;
+};
+
+
+export type Res_file = {
+  filename: string;
+  url: string;
 };

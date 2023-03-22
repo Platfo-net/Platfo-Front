@@ -73,7 +73,7 @@ const Wrapper = styled.div<WrapperType>`
   flex-direction: column;
   transition: ${settings.transition};
   width: ${({ width }) => (width ? width : "100%")};
-  height: ${({ rows = 1 }) => rows * 20}px;
+  height: ${({ rows = 1 }) => (rows * 20) + 100}px;
   span {
     margin-left: 0.5rem;
     margin-right: 0.5rem;

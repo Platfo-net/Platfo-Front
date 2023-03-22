@@ -55,11 +55,9 @@ const AccountsPage: NextPageWithLayout = () => {
     console.log('new version for all');
     try {
       setLoading(true);
-      console.log('nice');
-      
+      console.log(window.FB)
       window.FB.login(
          function (response: any) {
-          console.log('nice try');
           if (response.authResponse) {
             const data = {
               facebook_user_id: response.authResponse.userID,
@@ -85,7 +83,6 @@ const AccountsPage: NextPageWithLayout = () => {
     } catch (e) {
       setLoading(false);
     }
-    console.log('Good you');
   };
 
   useEffect(() => {
