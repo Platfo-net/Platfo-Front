@@ -13,6 +13,40 @@ export type Body_Auth_AccessToken = {
   password: string;
 };
 
+export type Body_User = {
+  phone_number: string;
+  phone_country_code: string;
+  first_name: string;
+  last_name: string;
+  password: string;
+};
+
+export type Body_Phone_Login = {
+  phone_number: string;
+  phone_country_code: string;
+  password: string;
+};
+
+export type Body_Phone_Register = {
+  phone_number: string;
+  phone_country_code: string;
+  first_name: string;
+  last_name: string;
+  password: string;
+};
+
+export type Body_Phone_Verification = {
+  phone_number: string;
+  phone_country_code: string;
+};
+
+export type Body_Activate_By_SMS = {
+  phone_number: string;
+  phone_country_code: string;
+  code: string;
+  token: string;
+};
+
 export type Res_Auth_AccessToken = {
   access_token: string;
   token_type: string;
