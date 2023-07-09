@@ -22,8 +22,8 @@ class BaseApi {
     this.$axios = axios.create({
       baseURL: `${baseUrl}${suffix ? `/${suffix}` : ''}`,
     });
-    this.requestInterceptors();
-    this.responseInterceptors();
+    // this.requestInterceptors();
+    // this.responseInterceptors();
   }
 
   requestInterceptors() {
