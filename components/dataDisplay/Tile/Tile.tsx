@@ -100,7 +100,10 @@ export const Tile: FC<ITile> = ({
                     width="40%"
                     submitKey="yes"
                     cancelKey="no"
-                    submit={() => remove(data)}
+                    submit={() => {
+                      remove(data)
+                      setIsVisible(false)
+                    }}
                   >
                     <div className="py-4">
                       <Typography.Text>

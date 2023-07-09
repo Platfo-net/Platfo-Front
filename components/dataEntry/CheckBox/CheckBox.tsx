@@ -16,6 +16,7 @@ import { css, SerializedStyles } from '@emotion/react';
 export interface ICheckBox {
   label?: string;
   color?: Color;
+  checked?: boolean;
   size?: Size;
   variant?: Variant;
   className?: string;
@@ -102,6 +103,7 @@ export const CheckBox: React.FC<ICheckBox> = forwardRef(
       size = 'md',
       className,
       onChange,
+      checked,
       ...rest
     },
     ref
@@ -114,6 +116,7 @@ export const CheckBox: React.FC<ICheckBox> = forwardRef(
           id={fieldId}
           type="checkbox"
           onChange={onChange}
+          checked={checked}
           {...rest}
         />
         <VisiblePart

@@ -1,6 +1,6 @@
-import { NextPageWithLayout } from '@/types/next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { AuthLayout } from '@/components/layouts/AuthLayout';
+import { NextPageWithLayout } from "@/types/next";
+//import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { AuthLayout } from "@/components/layouts/AuthLayout";
 
 const RegisterPage: NextPageWithLayout = () => {
   return <div>ghgh</div>;
@@ -8,20 +8,20 @@ const RegisterPage: NextPageWithLayout = () => {
 
 export default RegisterPage;
 
-export const getStaticProps = async ({ locale }: { locale: string }) => {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ['common'])),
-    },
-  };
-};
+// export const getStaticProps = async ({ locale }: { locale: string }) => {
+//   return {
+//     props: {
+//       ...(await serverSideTranslations(locale, ['common'])),
+//     },
+//   };
+// };
 
 RegisterPage.getLayout = (page) => {
   return (
     <AuthLayout
       meta={{
-        title: 'Botinow',
-        description: '',
+        title: "platfo",
+        description: "",
       }}
     >
       {page}

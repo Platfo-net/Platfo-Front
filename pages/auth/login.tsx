@@ -1,16 +1,16 @@
-import { NextPageWithLayout } from '@/types/next';
-import { useTranslation } from 'next-i18next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { Input } from '@/components/dataEntry/Input/Input';
-import { Button } from '@/components/general/Button';
-import { Typography } from '@/components/general/Typography';
-import { Body_Auth_AccessToken } from '@/types/api';
-import { useForm } from 'react-hook-form';
-import { useRouter } from 'next/router';
-import { useAppDispatch, useAppSelector } from '@/stores/reduxHooks';
-import { login } from '@/stores/reducers/auth';
-import { Path } from '@/constants/enums';
-import { AuthLayout } from '@/components/layouts/AuthLayout';
+import { NextPageWithLayout } from "@/types/next";
+import { useTranslation } from "next-i18next";
+// import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { Input } from "@/components/dataEntry/Input/Input";
+import { Button } from "@/components/general/Button";
+import { Typography } from "@/components/general/Typography";
+import { Body_Auth_AccessToken } from "@/types/api";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/router";
+import { useAppDispatch, useAppSelector } from "@/stores/reduxHooks";
+import { login } from "@/stores/reducers/auth";
+import { Path } from "@/constants/enums";
+import { AuthLayout } from "@/components/layouts/AuthLayout";
 
 const LoginPage: NextPageWithLayout = () => {
   const {
@@ -18,7 +18,7 @@ const LoginPage: NextPageWithLayout = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<Body_Auth_AccessToken>();
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { requestState, token, error } = useAppSelector(({ auth }) => ({
@@ -43,19 +43,19 @@ const LoginPage: NextPageWithLayout = () => {
         weight="bold"
         className="flex justify-center mb-4"
       >
-        {t('login')}
+        {t("login")}
       </Typography.Title>
       <form className="px-16 pb-0 my-8" onSubmit={handleSubmit(submit)}>
         <div className="mb-10">
           <Input
             placeholder="example@gmail.com"
             feedback={errors.email?.message}
-            color={errors.email?.message ? 'danger' : 'default'}
-            {...register('email', {
-              required: t('error-required-field'),
+            color={errors.email?.message ? "danger" : "default"}
+            {...register("email", {
+              required: t("error-required-field"),
               pattern: {
                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: t('error-invalid-email'),
+                message: t("error-invalid-email"),
               },
             })}
           />
@@ -63,22 +63,22 @@ const LoginPage: NextPageWithLayout = () => {
             type="password"
             className="mt-8"
             placeholder="password"
-            color={errors.password?.message ? 'danger' : 'default'}
+            color={errors.password?.message ? "danger" : "default"}
             feedback={errors.password?.message}
-            {...register('password', {
-              required: t('error-required-field'),
-              minLength: { value: 3, message: t('error-min-length') },
+            {...register("password", {
+              required: t("error-required-field"),
+              minLength: { value: 3, message: t("error-min-length") },
             })}
           />
         </div>
         <div className="flex flex-col items-center justify-between mt-10">
           <Button
             type="submit"
-            title={t('login')}
+            title={t("login")}
             color="secondary"
             width="100%"
             className="mb-4"
-            isLoading={requestState === 'pending'}
+            isLoading={requestState === "pending"}
           />
           {/* <Button
             type="button"
@@ -94,17 +94,17 @@ const LoginPage: NextPageWithLayout = () => {
 
 export default LoginPage;
 
-export const getStaticProps = async ({ locale }: { locale: string }) => {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ['common'])),
-    },
-  };
-};
+// export const getStaticProps = async ({ locale }: { locale: string }) => {
+//   return {
+//     props: {
+//       ...(await serverSideTranslations(locale, ['common'])),
+//     },
+//   };
+// };
 
 LoginPage.getLayout = (page) => {
   return (
-    <AuthLayout meta={{ title: 'Login', description: 'Login Botinow' }}>
+    <AuthLayout meta={{ title: "Login", description: "Login Platfo" }}>
       {page}
     </AuthLayout>
   );

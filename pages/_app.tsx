@@ -1,12 +1,12 @@
-import type { AppProps } from 'next/app';
-import '@/styles/globals.css';
-import { NextPageWithLayout } from '@/types/next';
-import { appWithTranslation } from 'next-i18next';
-import React, { useEffect } from 'react';
-import { useRouter } from 'next/router';
-import { setLanguageDirection } from '@/styles/globals';
-import { Provider } from 'react-redux';
-import { store } from '@/stores/store';
+import type { AppProps } from "next/app";
+import "@/styles/globals.css";
+import { NextPageWithLayout } from "@/types/next";
+import { appWithTranslation } from "next-i18next";
+import React, { useEffect } from "react";
+import { useRouter } from "next/router";
+import { setLanguageDirection } from "@/styles/globals";
+import { Provider } from "react-redux";
+import { store } from "@/stores/store";
 
 interface AppPropsWithLayout extends AppProps {
   Component: NextPageWithLayout;
@@ -22,13 +22,8 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   }, [router.locale]);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const style = ['color: Violet', 'font-size: 1.5em'].join(';');
-      // eslint-disable-next-line no-console
-      console.log(
-        '%c👋🏻 As a member of Botinow family, I welcome you to our site 💜 \n\nNow console is yours 😉',
-        style
-      );
+    if (typeof window !== "undefined") {
+      const style = ["color: Violet", "font-size: 1.5em"].join(";");
     }
   }, []);
 

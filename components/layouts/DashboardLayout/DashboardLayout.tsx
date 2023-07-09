@@ -73,7 +73,7 @@ export const DashboardLayout: FC<IDashboardLayout> = ({
   useEffect(() => {
     window.fbAsyncInit = function () {
       window.FB.init({
-        appId: '551990259962247',
+        appId: '448865257100176',
         autoLogAppEvents: true,
         xfbml: true,
         version: 'v14.0',

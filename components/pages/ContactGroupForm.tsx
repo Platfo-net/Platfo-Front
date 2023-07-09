@@ -1,36 +1,33 @@
-import React, { FC, useEffect, useState } from 'react';
-import { Input } from '@/components/dataEntry/Input/Input';
-import { useForm, Controller } from 'react-hook-form';
-import {
-  Body_Postman_Group,
-  IContact,
-  Res_LiveChat_Contact_All_PageId,
-} from '@/types/api';
-import { useTranslation } from 'next-i18next';
-import { Modal } from '@/components/feedback/Modal';
-import TileButton from '@/components/general/TileButton/TileButton';
-import { AxiosResponse } from 'axios';
-import LiveChatService from '@/services/endpoints/LiveChatService';
-import PostmanService from '@/services/endpoints/PostmanService';
-import { AvatarCheckBox } from '@/components/dataEntry/AvatarCheckBox';
-import { Avatar } from '@/components/dataDisplay/Avatar';
+import React, { FC, useEffect, useState } from "react";
+import { Input } from "@/components/dataEntry/Input/Input";
+import { useForm, Controller, useFormState } from "react-hook-form";
+import { Body_Postman_Group, IContact, Res_LiveChat_Contact_All_PageId } from "@/types/api";
+import { useTranslation } from "next-i18next";
+import { Modal } from "@/components/feedback/Modal";
+import TileButton from "@/components/general/TileButton/TileButton";
+import { AxiosResponse } from "axios";
+import LiveChatService from "@/services/endpoints/LiveChatService";
+import PostmanService from "@/services/endpoints/PostmanService";
+import { AvatarCheckBox } from "@/components/dataEntry/AvatarCheckBox";
+import { Avatar } from "@/components/dataDisplay/Avatar";
 
 interface IProps {
   pageId: string;
-  change: () => void;
+  change: (pageId:string) => void;
 }
 const ContactGroupForm: FC<IProps> = ({ pageId, change }) => {
   const {
     register,
     handleSubmit,
     control,
+    reset,
     formState: { errors },
   } = useForm<Body_Postman_Group>({
     defaultValues: {
       facebook_page_id: pageId,
     },
   });
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
 
   const [loading, setLoading] = useState(false);
   const [contacts, setContacts] = useState<IContact[]>([]);
@@ -43,8 +40,7 @@ const ContactGroupForm: FC<IProps> = ({ pageId, change }) => {
   const getContacts = async (pageId: string) => {
     try {
       setLoading(true);
-      const response: AxiosResponse<Res_LiveChat_Contact_All_PageId> =
-        await LiveChatService.getContacts(pageId);
+      const response: AxiosResponse<Res_LiveChat_Contact_All_PageId> = await LiveChatService.getContacts(pageId);
       setContacts(response.data.items);
       setLoading(false);
     } catch (e) {
@@ -52,15 +48,23 @@ const ContactGroupForm: FC<IProps> = ({ pageId, change }) => {
     }
   };
 
+  const resetForm = () => reset({ name: "", description: "", facebook_page_id: "", contacts: [] });
+
+  const handleCancel = () =>{
+    resetForm()
+    modalHandler()
+  }
+
   const submit = async (data: Body_Postman_Group) => {
-    const changeData = { ...data };
+    const changeData = { ...data, facebook_page_id: pageId };
     changeData.contacts = changeData.contacts.filter((contact) => contact);
     try {
       setLoading(true);
       await PostmanService.postGroup(changeData);
       setLoading(false);
       setOpenModal(false);
-      await change();
+      resetForm()
+      change(pageId)
     } catch (e) {
       setLoading(false);
     }
@@ -76,12 +80,12 @@ const ContactGroupForm: FC<IProps> = ({ pageId, change }) => {
 
   return (
     <>
-      <TileButton title={t('add-new-group')} onClick={modalHandler} />
+      <TileButton title={t("add-new-group")} onClick={modalHandler} />
       <form onSubmit={handleSubmit(submit)}>
         <Modal
           isVisible={openModal}
-          cancel={modalHandler}
-          title={t('add-new-group')}
+          cancel={handleCancel}
+          title={t("add-new-group")}
           width="50%"
           submitType="submit"
           isLoading={loading}
@@ -89,24 +93,24 @@ const ContactGroupForm: FC<IProps> = ({ pageId, change }) => {
           <div className="flex flex-wrap  w-full">
             <div className="basis-1/3 p-2">
               <Input
-                label={t('name')}
+                label={t("name")}
                 feedback={errors.name?.message}
                 color="postman"
-                status={errors.description?.message ? 'danger' : 'default'}
-                {...register('name', {
-                  required: t('error-required-field'),
+                status={errors.description?.message ? "danger" : "default"}
+                {...register("name", {
+                  required: t("error-required-field"),
                 })}
               />
             </div>
             <div className="basis-2/3 p-2">
               <Input
-                label={t('description')}
+                label={t("description")}
                 color="postman"
-                status={errors.description?.message ? 'danger' : 'default'}
+                status={errors.description?.message ? "danger" : "default"}
                 feedback={errors.description?.message}
-                {...register('description', {
-                  required: t('error-required-field'),
-                  minLength: { value: 3, message: t('error-min-length') },
+                {...register("description", {
+                  required: t("error-required-field"),
+                  minLength: { value: 3, message: t("error-min-length") },
                 })}
               />
             </div>
@@ -122,7 +126,7 @@ const ContactGroupForm: FC<IProps> = ({ pageId, change }) => {
                       render={({ field: { onChange } }) => (
                         <AvatarCheckBox
                           color="postman"
-                          label={contact.information.name || ''}
+                          label={contact.information.name || ""}
                           onChange={(e) =>
                             onChange(
                               e.currentTarget.checked
@@ -133,13 +137,7 @@ const ContactGroupForm: FC<IProps> = ({ pageId, change }) => {
                                 : undefined
                             )
                           }
-                          avatar={
-                            <Avatar
-                              url={contact.information.profile_image}
-                              size={3.5}
-                              type="image"
-                            />
-                          }
+                          avatar={<Avatar url={contact.information.profile_image} size={3.5} type="image" />}
                         />
                       )}
                     />

@@ -1,22 +1,21 @@
-import { NextPageWithLayout } from '@/types/next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { DashboardLayout } from '@/components/layouts/DashboardLayout';
-import { postmanMenu } from '@/constants/dashboardMenu';
-import { Tile } from '@/components/dataDisplay/Tile';
-import { Avatar } from '@/components/dataDisplay/Avatar';
-import { useEffect, useState } from 'react';
-import { AxiosResponse } from 'axios';
-import {
-  IAccount,
-  ICampaign,
-  Res_Account_All,
-  Res_Postman_Campaign_FacebookPageId,
-} from '@/types/api';
-import { Typography } from '@/components/general/Typography';
-import BackdropLoading from '@/components/feedback/BackdropLoading/BackdropLoading';
-import AccountService from '@/services/endpoints/AccountService';
-import { Platform } from '@/constants/enums';
-import PostmanService from '@/services/endpoints/PostmanService';
+import { NextPageWithLayout } from "@/types/next";
+//import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { DashboardLayout } from "@/components/layouts/DashboardLayout";
+import { postmanMenu } from "@/constants/dashboardMenu";
+import { Tile } from "@/components/dataDisplay/Tile";
+import { Avatar } from "@/components/dataDisplay/Avatar";
+import { useEffect, useState } from "react";
+import { AxiosResponse } from "axios";
+import { useTranslation } from "next-i18next";
+import { IAccount, ICampaign, Res_Account_All, Res_Postman_Campaign_FacebookPageId } from "@/types/api";
+import { Typography } from "@/components/general/Typography";
+import BackdropLoading from "@/components/feedback/BackdropLoading/BackdropLoading";
+import AccountService from "@/services/endpoints/AccountService";
+import { Platform } from "@/constants/enums";
+import PostmanService from "@/services/endpoints/PostmanService";
+import CampaignForm from "@/components/pages/CampaignForm";
+import { Button } from "@/components/general/Button";
+import CampaignDetails from "@/components/pages/CampaginDetail";
 
 const { Text } = Typography;
 
@@ -26,11 +25,14 @@ const CampaignsPage: NextPageWithLayout = () => {
   const [campaigns, setCampaigns] = useState<ICampaign[]>([]);
   const [selectedAccount, setSelectedAccount] = useState<IAccount>();
 
+  const [selectedCampaignId, setSelectedCampaignId] = useState<string | null>(null);
+
+  const { t } = useTranslation("common");
+
   const getAccounts = async () => {
     try {
       setLoading(true);
-      const response: AxiosResponse<Res_Account_All> =
-        await AccountService.getAccounts();
+      const response: AxiosResponse<Res_Account_All> = await AccountService.getAccounts();
       setAccounts(response.data);
       if (response.data.length > 0) {
         setLoading(false);
@@ -48,9 +50,24 @@ const CampaignsPage: NextPageWithLayout = () => {
   const getCampaigns = async (pageId: string) => {
     try {
       setLoading(true);
-      const response: AxiosResponse<Res_Postman_Campaign_FacebookPageId> =
-        await PostmanService.getCampaigns(pageId);
+      const response: AxiosResponse<Res_Postman_Campaign_FacebookPageId> = await PostmanService.getCampaigns({
+        facebook_page_id: pageId,
+      });
+      console.log(response.data);
       setCampaigns(response.data.items);
+      setLoading(false);
+    } catch (e) {
+      setLoading(false);
+    }
+  };
+
+  const getCampaign = async (campaignId: string) => {
+    try {
+      setLoading(true);
+      const response: AxiosResponse<Res_Postman_Campaign_FacebookPageId> = await PostmanService.getCampaignById(
+        campaignId
+      );
+      console.log(response.data);
       setLoading(false);
     } catch (e) {
       setLoading(false);
@@ -90,11 +107,7 @@ const CampaignsPage: NextPageWithLayout = () => {
                   data={account}
                   isActive={account.id === selectedAccount?.id}
                   color="postman"
-                  icon={
-                    Platform[
-                      account.platform as unknown as keyof typeof Platform
-                    ]
-                  }
+                  icon={Platform[account.platform as unknown as keyof typeof Platform]}
                   title={account.username}
                 />
               );
@@ -104,31 +117,33 @@ const CampaignsPage: NextPageWithLayout = () => {
       )}
 
       <div className="flex flex-wrap">
+        <CampaignDetails campaignId={selectedCampaignId} handleCloseModal={() => setSelectedCampaignId(null)}  />
         {selectedAccount && (
           <div className="basis-1/6 m-3 ">
-            {/*<ContactGroupForm*/}
-            {/*  pageId={selectedAccount.page_id}*/}
-            {/*  change={() => getGroups(selectedAccount.page_id)}*/}
-            {/*/>*/}
+            <CampaignForm page_id={selectedAccount.page_id} submitCallback={getCampaigns} />
           </div>
         )}
-
         {campaigns?.map((campaign) => {
           return (
             <div className="basis-1/6 m-3" key={campaign.id}>
-              <Tile
-                data={campaign}
-                width="255px"
-                height="255px"
-                // click={changeRoute}
-                // clickColor="postman"
-                // clickLabel={t('details')}
-              >
+              <Tile data={campaign} width="255px" height="255px" clickLabel={t("details")}>
                 <div className="flex flex-col text-center w-full">
+                  <div className="w-full flex justify-center mb-6">
+                    <Avatar url={""} type="image" color="postman" size={6} />
+                  </div>
                   <Text weight="semiBold"> {campaign.name} </Text>
-                  <Text weight="light" color="nonActive">
-                    {campaign.description}
+                  <Text className="mt-5" weight="semiBold">
+                    {new Date(campaign.created_at).toLocaleDateString("en")}
                   </Text>
+                  <Button
+                    type="button"
+                    className="mx-6"
+                    width="full"
+                    title={t("details")}
+                    color="postman"
+                    variant="contained"
+                    onClick={() => setSelectedCampaignId(campaign.id)}
+                  />
                 </div>
               </Tile>
             </div>
@@ -141,21 +156,9 @@ const CampaignsPage: NextPageWithLayout = () => {
 
 export default CampaignsPage;
 
-export const getStaticProps = async ({ locale }: { locale: string }) => {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ['common'])),
-    },
-  };
-};
-
 CampaignsPage.getLayout = (page) => {
   return (
-    <DashboardLayout
-      topMenu={postmanMenu}
-      meta={{ title: 'Campaigns' }}
-      color="postman"
-    >
+    <DashboardLayout topMenu={postmanMenu} meta={{ title: "Campaigns" }} color="postman">
       {page}
     </DashboardLayout>
   );

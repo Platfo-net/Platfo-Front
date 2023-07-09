@@ -1,6 +1,6 @@
-import { NextPageWithLayout } from '@/types/next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { MainLayout } from '@/components/layouts/MainLayout';
+import { NextPageWithLayout } from "@/types/next";
+//import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { MainLayout } from "@/components/layouts/MainLayout";
 
 const Home: NextPageWithLayout = () => {
   return <div />;
@@ -8,19 +8,19 @@ const Home: NextPageWithLayout = () => {
 
 export default Home;
 
-export const getStaticProps = async ({ locale }: { locale: string }) => {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ['common'])),
-    },
-  };
-};
+// export const getStaticProps = async ({ locale }: { locale: string }) => {
+//   return {
+//     props: {
+//       ...(await serverSideTranslations(locale, ['common'])),
+//     },
+//   };
+// };
 
 Home.getLayout = (page) => {
   return (
     <MainLayout
       meta={{
-        title: '',
+        title: "",
         description: undefined,
       }}
     >

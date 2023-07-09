@@ -1,4 +1,5 @@
 import { Application, Platform } from '@/constants/enums';
+import { StoryIndex } from '@storybook/store';
 
 export type Pagination = {
   page: number;
@@ -92,8 +93,9 @@ export interface IChatflow {
 export type Res_BotBuilder_Chatflow_All = IChatflow[];
 
 export interface IParams_Pagination {
-  page: number;
-  page_size: number;
+  page?: number;
+  page_size?: number;
+  facebook_page_id: string
 }
 
 export interface INotification {
@@ -152,16 +154,65 @@ export type Body_Postman_Group = {
   }[];
 };
 
-export interface ICampaign {
-  id: string;
+
+export type Body_Postman_Campaign = {
   name: string;
   description: string;
-  created_at: string;
   status: string;
   is_draft: boolean;
+  group_id: string;
+  facebook_page_id: string;
+  image: {
+    filename: string;
+  };
+  content: {
+    text: string;
+  };
+};
+
+export interface ICampaign {
+  id :string
+  name: string;
+  description: string;
+  status: string;
+  is_draft: Boolean;
+  created_at:Date;
   group_name: string;
+  facebook_page_id: string;
+  account: {
+    id: string;
+    username: string;
+    platform: string;
+    profile_image: string;
+    page_id: string;
+  };
+  content: {
+    object
+    text:string
+  };
+  user_id: string;
+  contacts: [string];
+  sent_count: number;
+  seen_count: number;
+  total_contact_count: number;
 }
 export type Res_Postman_Campaign_FacebookPageId = {
   items: ICampaign[];
   pagination: Pagination;
+};
+
+export type file = {
+  path: string;
+  lastModified: number; // timestamp
+  lastModifiedDate: Date;
+  name: string;
+  size: number;
+  type: string;
+  webkitRelativePath: string;
+};
+
+
+export type Res_file = {
+  filename: string;
+  url: string;
 };

@@ -1,3 +1,4 @@
+
 /** @type {import('next').NextConfig} */
 const { i18n } = require('./next-i18next.config');
 
@@ -6,7 +7,7 @@ const nextConfig = {
   reactStrictMode: false,
   swcMinify: true,
   publicRuntimeConfig: {
-    BASE_URL: process.env.BASE_URL
+    BASE_URL: process.env.BASE_URL,
   },
   env: {
     BASE_URL: process.env.BASE_URL,
@@ -15,19 +16,19 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: '**.fbcdn.net'
+        protocol: "https",
+        hostname: "**.fbcdn.net",
       },
       {
-        protocol: 'https',
-        hostname: '**.cdninstagram.com'
+        protocol: "https",
+        hostname: "**.cdninstagram.com",
       },
       {
-        protocol: 'https',
-        hostname: 'unsplash.com'
-      }
-    ]
-  }
+        protocol: "https",
+        hostname: "unsplash.com",
+      },
+    ],
+  },
 };
 
 module.exports = nextConfig;

@@ -1,8 +1,8 @@
-import React from 'react';
-import { Modal } from '@/components/feedback/Modal';
-import { Logo } from '@/components/dataDisplay/Logo';
-import styled from '@emotion/styled';
-import { Typography } from '@/components/general/Typography';
+import React from "react";
+import { Modal } from "@/components/feedback/Modal";
+import { Logo } from "@/components/dataDisplay/Logo";
+import styled from "@emotion/styled";
+import { Typography } from "@/components/general/Typography";
 
 const { Text } = Typography;
 export interface IBackdropLoading {
@@ -71,12 +71,12 @@ const WrapperBalls = styled.div`
 `;
 const BackdropLoading: React.FC<IBackdropLoading> = ({ loading }) => {
   return (
-    <StyledModal isVisible={loading} width={'auto'}>
+    <StyledModal isVisible={loading} width={"auto"}>
       <Wrapper>
         <WrapperLogo>
           <Logo size={3} />
           <Text weight="semiBold" size="6xl">
-            Botinow
+            Platfo
           </Text>
         </WrapperLogo>
         <WrapperBalls>
