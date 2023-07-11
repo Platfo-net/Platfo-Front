@@ -23,7 +23,7 @@ const login = createAsyncThunk<Res_Auth_AccessToken, Body_Auth_AccessToken>(
   'auth/login',
   async (data, { rejectWithValue }) => {
     try {
-      const response = await AuthService.postLogin(data);
+      const response = await AuthService.postEmailLogin(data);
       tokenObj.setToken(response.data.access_token);
       return response.data;
     } catch (error) {

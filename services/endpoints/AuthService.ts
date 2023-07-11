@@ -7,7 +7,7 @@ class Auth extends BaseApi {
   }
   postPhoneLogin = (data: Body_Phone_Login) => this.$axios.post(`access-token-phone-number`, data);
 
-  postEmailLogin = (data: Body_Auth_AccessToken) => this.$axios.post(`access-token-email`, data);
+  postEmailLogin = (data: Body_Auth_AccessToken) => this.$axios.post(`access-token`, data);
 
   postActivationCodeBySMS = (data: Body_Phone_Verification) => this.$axios.post(`send-activation-code-by-sms`, data);
   

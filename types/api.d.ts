@@ -61,7 +61,7 @@ export interface IAccount {
   username: string;
   platform: Platform;
   profile_image: string;
-  page_id: string;
+  facebook_page_id: string;
 }
 export type Res_Account_All = IAccount[];
 
