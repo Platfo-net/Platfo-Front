@@ -75,7 +75,7 @@ const CampaignsPage: NextPageWithLayout = () => {
   };
 
   const changeSelectedAccount = async (account: IAccount) => {
-    await getCampaigns(account.page_id);
+    await getCampaigns(account.facebook_page_id);
     setSelectedAccount(account);
   };
 
@@ -84,7 +84,7 @@ const CampaignsPage: NextPageWithLayout = () => {
       const firstAccount = await getAccounts();
       if (firstAccount) {
         setSelectedAccount(firstAccount);
-        await getCampaigns(firstAccount.page_id);
+        await getCampaigns(firstAccount.facebook_page_id);
       } else {
         setCampaigns([]);
       }
@@ -120,7 +120,7 @@ const CampaignsPage: NextPageWithLayout = () => {
         <CampaignDetails campaignId={selectedCampaignId} handleCloseModal={() => setSelectedCampaignId(null)}  />
         {selectedAccount && (
           <div className="basis-1/6 m-3 ">
-            <CampaignForm page_id={selectedAccount.page_id} submitCallback={getCampaigns} />
+            <CampaignForm page_id={selectedAccount.facebook_page_id} submitCallback={getCampaigns} />
           </div>
         )}
         {campaigns?.map((campaign) => {

@@ -60,21 +60,21 @@ const GroupsPage: NextPageWithLayout = () => {
   };
 
   const changeSelectedAccount = async (account: IAccount) => {
-    await getGroups(account.page_id);
+    await getGroups(account.facebook_page_id);
 
     setSelectedAccount(account);
   };
 
   const removeGroup = async (group: IContactGroup) => {
-    if(!selectedAccount?.page_id) return 
+    if(!selectedAccount?.facebook_page_id) return 
     try {
       setLoading(true);
       await PostmanService.deleteGroup(group.id);
       await getAccounts();
       setLoading(false);
-      await getGroups(selectedAccount?.page_id)
+      await getGroups(selectedAccount?.facebook_page_id)
     } catch (e) {
-      await getGroups(selectedAccount?.page_id)
+      await getGroups(selectedAccount?.facebook_page_id)
       setLoading(false);
     }
   };
@@ -84,7 +84,7 @@ const GroupsPage: NextPageWithLayout = () => {
       const firstAccount = await getAccounts();
       if (firstAccount) {
         setSelectedAccount(firstAccount);
-        await getGroups(firstAccount.page_id);
+        await getGroups(firstAccount.facebook_page_id);
       } else {
         setGroups([]);
       }
@@ -125,8 +125,8 @@ const GroupsPage: NextPageWithLayout = () => {
         {selectedAccount && (
           <div className="basis-1/6 m-3 ">
             <ContactGroupForm
-              pageId={selectedAccount.page_id}
-              change={() => getGroups(selectedAccount.page_id)}
+              pageId={selectedAccount.facebook_page_id}
+              change={() => getGroups(selectedAccount.facebook_page_id)}
             />
           </div>
         )}

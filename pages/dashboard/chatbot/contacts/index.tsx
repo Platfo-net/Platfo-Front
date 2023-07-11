@@ -63,7 +63,7 @@ const ContactsPage: NextPageWithLayout = () => {
   };
 
   const changeSelectedAccount = async (account: IAccount) => {
-    await getContacts(account.page_id);
+    await getContacts(account.facebook_page_id);
     setSelectedAccount(account);
   };
 
@@ -79,7 +79,7 @@ const ContactsPage: NextPageWithLayout = () => {
       const firstAccount = await getAccounts();
       if (firstAccount) {
         setSelectedAccount(firstAccount);
-        await getContacts(firstAccount.page_id);
+        await getContacts(firstAccount.facebook_page_id);
       } else {
         setContacts([]);
       }
