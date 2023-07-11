@@ -1,111 +1,198 @@
 import { NextPageWithLayout } from "@/types/next";
+import Image from "next/image";
+import LoginImage from "@/assets/images/login.png";
 import { useTranslation } from "next-i18next";
-// import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { Input } from "@/components/dataEntry/Input/Input";
-import { Button } from "@/components/general/Button";
-import { Typography } from "@/components/general/Typography";
+import { useForm, Resolver } from "react-hook-form";
+import { forwardRef } from "react";
+import Link from "next/link";
 import { Body_Auth_AccessToken } from "@/types/api";
-import { useForm } from "react-hook-form";
-import { useRouter } from "next/router";
-import { useAppDispatch, useAppSelector } from "@/stores/reduxHooks";
 import { login } from "@/stores/reducers/auth";
+import { useAppDispatch, useAppSelector } from "@/stores/reduxHooks";
+import { useRouter } from "next/router";
 import { Path } from "@/constants/enums";
-import { AuthLayout } from "@/components/layouts/AuthLayout";
 
-const LoginPage: NextPageWithLayout = () => {
+type FormValues = {
+  email: string;
+  password: string;
+};
+
+const Input: any = forwardRef(
+  ({ error, ...rest }: { error: string }, ref: any) => {
+    return (
+      <div>
+        <input
+          ref={ref}
+          style={{
+            borderRadius: "1rem",
+            height: "3.5rem",
+            width: "100%",
+            padding: ".5rem",
+            background: "rgba(139, 202, 193 , .24)",
+          }}
+          {...rest}
+        />
+        <p style={{ color: "red" }}>{error ? error : ""}</p>
+      </div>
+    );
+  }
+);
+
+const resolver: Resolver<FormValues> = async (values) => {
+  return {
+    values: values.email ? values : {},
+    errors: !values.email
+      ? {
+          email: {
+            type: "required",
+            message: "email is required.",
+          },
+        }
+      : !values.password
+      ? {
+          password: {
+            type: "required",
+            message: "password is required.",
+          },
+        }
+      : {},
+  };
+};
+
+const RegisterPage: NextPageWithLayout = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Body_Auth_AccessToken>();
-  const { t } = useTranslation("common");
+  } = useForm<FormValues>({ resolver });
   const router = useRouter();
   const dispatch = useAppDispatch();
+
+  const { t } = useTranslation("common");
+
   const { requestState, token, error } = useAppSelector(({ auth }) => ({
     requestState: auth.requestState,
     token: auth.token,
     error: auth.error,
   }));
 
-  if (Boolean(token) && !error) {
-    router.push(Path.Accounts);
-  }
+  if (Boolean(token) && !error) router.push(Path.Accounts);
 
-  const submit = (data: Body_Auth_AccessToken) => {
+  const submit = handleSubmit((data: Body_Auth_AccessToken) => {
     dispatch(login(data));
-  };
+  });
 
   return (
-    <div>
-      <Typography.Title
-        level="h3"
-        size="2xl"
-        weight="bold"
-        className="flex justify-center mb-4"
+    <>
+      <Image
+        alt="login image"
+        src={LoginImage.src}
+        width={1000}
+        height={1000}
+        style={{
+          position: "absolute",
+          top: 0,
+          width: "100%",
+          height: "100vh",
+          objectFit: "cover",
+          zIndex: 1,
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          zIndex: 10000,
+          width: "100%",
+          height: "100%",
+        }}
       >
-        {t("login")}
-      </Typography.Title>
-      <form className="px-16 pb-0 my-8" onSubmit={handleSubmit(submit)}>
-        <div className="mb-10">
-          <Input
-            placeholder="example@gmail.com"
-            feedback={errors.email?.message}
-            color={errors.email?.message ? "danger" : "default"}
-            {...register("email", {
-              required: t("error-required-field"),
-              pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: t("error-invalid-email"),
-              },
-            })}
-          />
-          <Input
-            type="password"
-            className="mt-8"
-            placeholder="password"
-            color={errors.password?.message ? "danger" : "default"}
-            feedback={errors.password?.message}
-            {...register("password", {
-              required: t("error-required-field"),
-              minLength: { value: 3, message: t("error-min-length") },
-            })}
-          />
+        <div
+          style={{
+            width: "90%",
+            maxWidth: "500px",
+            height: "38rem",
+            padding: "1rem",
+            background: "white",
+            margin: "5% auto",
+            borderRadius: "2rem",
+            boxShadow: "0px 0px 20px rgba(0,0,0,.4)",
+          }}
+        >
+          <h1
+            className="mt-5"
+            style={{ fontSize: "3rem", color: "black", textAlign: "center" }}
+          >
+            {t("Login")}
+          </h1>
+          <p className="mt-1" style={{ color: "black", textAlign: "center" }}>
+            {t(`We are very happy to see you again.`)}
+          </p>
+          <p className="mt-1" style={{ color: "black", textAlign: "center" }}>
+            {t(`Let's go`)}
+          </p>
+
+          <form className="mt-7" onSubmit={submit}>
+            <div className="px-3">
+              <div className="my-3">
+                <div className="ml-3 text-black">email</div>
+                <Input error={errors?.email?.message} {...register("email")} />
+              </div>
+              <div className="my-3">
+                <div className="ml-3 text-black">password</div>
+                <Input
+                  type="password"
+                  error={errors?.password?.message}
+                  {...register("password")}
+                />
+              </div>
+            </div>
+
+            <div className="text-center mt-2">
+              {t("You want to login with your phone number")}
+
+              <Link href="#">
+                <p style={{ color: "#77E9D7", fontWeight: "bold" }}>
+                  Login with phone number
+                </p>
+              </Link>
+            </div>
+
+            <div className="text-center mt-2">
+              {t("You forgot your password")}
+
+              <Link href="#">
+                <p style={{ color: "#77E9D7", fontWeight: "bold" }}>
+                  Forgot password
+                </p>
+              </Link>
+            </div>
+
+            <div className="w-full flex mt-4">
+              <button
+                className="text-black"
+                style={{
+                  margin: "0 auto",
+                  padding: "1rem 2.4rem",
+                  background: "#77E9D7",
+                  borderRadius: "1rem",
+                }}
+                formAction="submit"
+              >
+                Login
+              </button>
+            </div>
+          </form>
+          <div className="text-center my-2">
+            {t("create new account? ")}{" "}
+            <Link href="/auth/register">
+              <span style={{ color: "#77E9D7", fontWeight: "bold" }}>
+                Register
+              </span>
+            </Link>
+          </div>
         </div>
-        <div className="flex flex-col items-center justify-between mt-10">
-          <Button
-            type="submit"
-            title={t("login")}
-            color="secondary"
-            width="100%"
-            className="mb-4"
-            isLoading={requestState === "pending"}
-          />
-          {/* <Button
-            type="button"
-            onClick={() => router.push('/auth/register')}
-            title={t('register')}
-            variant="text"
-          />*/}
-        </div>
-      </form>
-    </div>
+      </div>
+    </>
   );
 };
 
-export default LoginPage;
-
-// export const getStaticProps = async ({ locale }: { locale: string }) => {
-//   return {
-//     props: {
-//       ...(await serverSideTranslations(locale, ['common'])),
-//     },
-//   };
-// };
-
-LoginPage.getLayout = (page) => {
-  return (
-    <AuthLayout meta={{ title: "Login", description: "Login Platfo" }}>
-      {page}
-    </AuthLayout>
-  );
-};
+export default RegisterPage;
