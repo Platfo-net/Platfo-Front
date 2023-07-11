@@ -3,14 +3,15 @@ import Image from "next/image";
 import LoginImage from "@/assets/images/login.png";
 import { useTranslation } from "next-i18next";
 import { useForm, Resolver } from "react-hook-form";
-import { forwardRef, useEffect, useState } from "react";
-import { VerificationCode } from "@/components/dataEntry/VerificationCode/VerificationCode";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { Body_Activate_By_SMS, Body_Phone_Verification } from "@/types/api";
 import { phoneCountriesCode } from "@/constants/config";
 import AuthService from "@/services/endpoints/AuthService";
 import { useCountDown } from "@/components/hooks/useCountDown";
 import { timerFormatter } from "@/utils/timerFormatter";
+
+import ReactPin from "react-pin-input";
 
 type FormValues = {
   name: string;
@@ -122,7 +123,14 @@ const Login2: NextPageWithLayout = () => {
           zIndex: 1,
         }}
       />
-      <div style={{ position: "absolute", zIndex: 10000, width: "100%", height: "100%" }}>
+      <div
+        style={{
+          position: "absolute",
+          zIndex: 10000,
+          width: "100%",
+          height: "100%",
+        }}
+      >
         <div
           style={{
             width: "90%",
@@ -135,7 +143,10 @@ const Login2: NextPageWithLayout = () => {
             boxShadow: "0px 0px 20px rgba(0,0,0,.4)",
           }}
         >
-          <h1 className="mt-5" style={{ fontSize: "2.3rem", color: "black", textAlign: "center" }}>
+          <h1
+            className="mt-5"
+            style={{ fontSize: "2.3rem", color: "black", textAlign: "center" }}
+          >
             {t("Verify your Phone")}
           </h1>
           <p className="mt-3" style={{ color: "black", textAlign: "center" }}>
@@ -145,43 +156,58 @@ const Login2: NextPageWithLayout = () => {
             09912011922
           </p>
 
-          <p className="mt-3 mx-4" style={{ color: "black", textAlign: "center" }}>
-            {t(`Please check your inbox and enter the verification code blew to verify your email address`)}
+          <p
+            className="mt-3 mx-4"
+            style={{ color: "black", textAlign: "center" }}
+          >
+            {t(
+              `Please check your inbox and enter the verification code blew to verify your email address`
+            )}
           </p>
 
-          <p className="mt-3 mx-4" style={{ color: "black", textAlign: "center" }}>
+          <p
+            className="mt-3 mx-4"
+            style={{ color: "black", textAlign: "center" }}
+          >
             {t(`Verification Code`)}
           </p>
+
           <div className="mx-auto" style={{ width: "20rem" }}>
-            <VerificationCode steps={5} onComplete={(data) => completeCode(data)} />
+            <ReactPin
+              style={{ display: "flex", justifyContent: "center" }}
+              inputStyle={{
+                border: "none",
+                borderRadius: "1rem",
+                background: "#8BCAC1",
+                color: "white",
+              }}
+              length={5}
+              focus
+              type="text"
+              inputMode="text"
+            />
           </div>
 
-          <p className="mt-3 mx-4" style={{ color: "black", textAlign: "center" }}>
+          <p
+            className="mt-3 mx-4"
+            style={{ color: "black", textAlign: "center" }}
+          >
             {t(`The code will expire after`)}
           </p>
 
-          <p className="mt-3 mx-4" style={{ color: "black", textAlign: "center" }}>
+          <p
+            className="mt-3 mx-4"
+            style={{ color: "black", textAlign: "center" }}
+          >
             {timerFormatter(timeLeft)}
           </p>
 
-          <p className="mt-3 mx-4" style={{ color: "black", textAlign: "center" }}>
+          <p
+            className="mt-3 mx-4"
+            style={{ color: "black", textAlign: "center" }}
+          >
             {t(`resend code`)}
           </p>
-
-          {/* <div className="w-full flex">
-            <button
-              className="text-black"
-              style={{
-                margin: "0 auto",
-                padding: "1rem 2.4rem",
-                background: "#77E9D7",
-                borderRadius: "1rem",
-              }}
-              formAction="submit"
-            >
-              Verify
-            </button>
-          </div> */}
         </div>
       </div>
     </>
