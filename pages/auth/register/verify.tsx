@@ -10,68 +10,25 @@ import { phoneCountriesCode } from "@/constants/config";
 import AuthService from "@/services/endpoints/AuthService";
 import { useCountDown } from "@/components/hooks/useCountDown";
 import { timerFormatter } from "@/utils/timerFormatter";
-
 import ReactPin from "react-pin-input";
-
-type FormValues = {
-  name: string;
-  email: string;
-  password: string;
-  confirmPassword?: string;
-};
-
-const resolver: Resolver<FormValues> = async (values) => {
-  return {
-    values: values.name ? values : {},
-    errors: !values.name
-      ? {
-          name: {
-            type: "required",
-            message: "name is required.",
-          },
-        }
-      : !values.email
-      ? {
-          email: {
-            type: "required",
-            message: "email is required.",
-          },
-        }
-      : !values.password
-      ? {
-          password: {
-            type: "required",
-            message: "password is required.",
-          },
-        }
-      : values.confirmPassword !== values.password
-      ? {
-          confirmPassword: {
-            type: "deps",
-            message: "password not match",
-          },
-        }
-      : {},
-  };
-};
+import { tokenObj } from "@/lib/token";
 
 const Login2: NextPageWithLayout = () => {
   const router = useRouter();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormValues>({ resolver });
   const { t } = useTranslation("common");
   const [smsToken, setSmsToken] = useState<string>("");
-  const { timeLeft } = useCountDown({ countDownAmount: 300 });
+  const { timeLeft } = useCountDown({
+    countDownAmount: 300,
+    onFinishCallback: () => {
+      router.reload();
+    },
+  });
 
 
   const sendVerificationCode = async (data: Body_Phone_Verification) => {
     try {
       const res = await AuthService.postActivationCodeBySMS(data);
       setSmsToken(res.data.token);
-      console.log(res.data.token);
     } catch (e) {
       console.log(e);
     }
@@ -79,15 +36,19 @@ const Login2: NextPageWithLayout = () => {
 
   const activateByVerificationCode = async (data:Body_Activate_By_SMS)=>{
     try{
-        const res = await AuthService.postActivateBySMS(data);
-        console.log(res);
+      const response = await AuthService.postActivateBySMS(data);
+      if(response.status === 200){
+        tokenObj.setToken(smsToken);
+        router.push({ pathname: "/dashboard" });
+      }
     }catch(e){
         console.log(e);
+        console.log('login unsuccessful')
     }
   }
 
   const completeCode = (data: string) => {
-      const { phone } = router.query;
+    const { phone } = router.query;
     if (!smsToken.length) return;
     if (!phone || typeof phone !== "string") return;
     activateByVerificationCode({
@@ -153,7 +114,7 @@ const Login2: NextPageWithLayout = () => {
             {t(`A verification Code has been sent to`)}
           </p>
           <p className="mt-2" style={{ color: "black", textAlign: "center" }}>
-            09912011922
+            {router.query.phone ?? ""}
           </p>
 
           <p
@@ -181,7 +142,8 @@ const Login2: NextPageWithLayout = () => {
                 background: "#8BCAC1",
                 color: "white",
               }}
-              length={5}
+              length={6}
+              onComplete={completeCode}
               focus
               type="text"
               inputMode="text"

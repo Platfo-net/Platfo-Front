@@ -80,14 +80,15 @@ const PhoneNumberRegister: NextPageWithLayout = () => {
     getValues,
     formState,
   } = useForm<FormValues>({ resolver });
-
   const router = useRouter()
-
 
   const registerUser = async (data: Body_Phone_Register) => {
     try {
       const res = await UserService.registerByPhoneNumber(data);
-      console.log(res);
+      const isCreatingUserSuccessful = res.status === 201;
+      if (!isCreatingUserSuccessful) return; 
+      const {phone} = getValues()
+      router.push({ pathname: "/auth/register/verify", query: { phone } });
     } catch (e: any) {
       const isUserInActive = e.response.status === 400;
       if(isUserInActive){
