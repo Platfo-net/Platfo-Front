@@ -7,16 +7,15 @@ import { forwardRef } from "react";
 import Link from "next/link";
 import UserService from "@/services/endpoints/UserService";
 import { Body_Phone_Register } from "@/types/api";
-import { phoneCountriesCode } from "@/constants/config";
-import { STATUS_CODES } from "http";
-import { HttpStatusCode } from "axios";
-import { Router, useRouter } from "next/router";
+import { phoneCountryCodes } from "@/constants/countryCodes";
+import { useRouter } from "next/router";
+import { Path } from "@/constants/enums";
 
 type FormValues = {
   name: string;
   lastName: string;
   phone: string;
-  password?: string;
+  password: string;
 };
 
 const Input: any = forwardRef(({ error, ...rest }: { error: string }, ref: any) => {
@@ -106,7 +105,7 @@ const PhoneNumberRegister: NextPageWithLayout = () => {
     registerUser({
       first_name: name,
       last_name: lastName,
-      phone_country_code: phoneCountriesCode.iran,
+      phone_country_code: phoneCountryCodes.Iran,
       phone_number: phoneNumber,
       password: password,
     });
@@ -179,7 +178,7 @@ const PhoneNumberRegister: NextPageWithLayout = () => {
             </div>
             <div className="text-center my-2">
               {t("have an account")}{" "}
-              <Link href="/auth/login2">
+              <Link href={Path.PhoneLogin}>
                 {" "}
                 <span style={{ color: "#77E9D7", fontWeight: "bold" }}>Login</span>
               </Link>

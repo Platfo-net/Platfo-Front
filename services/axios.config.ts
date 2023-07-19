@@ -81,7 +81,7 @@ class BaseApi {
 
         if (RES403) {
           tokenObj.removeToken();
-          location.replace(Path.Login);
+          location.replace(Path.PhoneLogin);
           throw error;
         }
 

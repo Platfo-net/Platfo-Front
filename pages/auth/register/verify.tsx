@@ -2,11 +2,10 @@ import { NextPageWithLayout } from "@/types/next";
 import Image from "next/image";
 import LoginImage from "@/assets/images/login.png";
 import { useTranslation } from "next-i18next";
-import { useForm, Resolver } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { Body_Activate_By_SMS, Body_Phone_Verification } from "@/types/api";
-import { phoneCountriesCode } from "@/constants/config";
+import { phoneCountryCodes } from "@/constants/countryCodes";
 import AuthService from "@/services/endpoints/AuthService";
 import { useCountDown } from "@/components/hooks/useCountDown";
 import { timerFormatter } from "@/utils/timerFormatter";
@@ -54,7 +53,7 @@ const Login2: NextPageWithLayout = () => {
     activateByVerificationCode({
       code: data,
       token: smsToken,
-      phone_country_code: phoneCountriesCode.iran,
+      phone_country_code: phoneCountryCodes.Iran,
       phone_number: phone,
     });
   };
@@ -63,7 +62,7 @@ const Login2: NextPageWithLayout = () => {
     if (!phone || typeof phone !== "string") return;
     if (phone.startsWith("0")) phone = phone.slice(1)
     sendVerificationCode({
-      phone_country_code: phoneCountriesCode.iran,
+      phone_country_code: phoneCountryCodes.Iran,
       phone_number: phone,
     });
   }, [router.query]);

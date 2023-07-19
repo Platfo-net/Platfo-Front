@@ -95,7 +95,7 @@ const MenuItem: React.FC<IMenuItem> = ({ data }) => {
   const onClick = (key: string) => {
     if (key === 'logout') {
       dispatch(logout());
-      router.push(Path.Login);
+      router.push(Path.PhoneLogin);
     }
     if (key === 'theme') {
       store('theme', isDark ? 'light' : 'dark');

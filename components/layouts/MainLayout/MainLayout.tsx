@@ -57,7 +57,7 @@ export const MainLayout: FC<IMainLayout> = ({ children, meta }) => {
   const theme = Themes[isDark ? 'dark' : 'light'];
 
   useEffect(() => {
-    router.push(Path.Login);
+    router.push(Path.PhoneLogin);
   }, [router]);
 
   return (

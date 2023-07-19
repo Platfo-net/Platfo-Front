@@ -54,7 +54,7 @@ export const DashboardLayout: FC<IDashboardLayout> = ({
   const checkAuthentication = useCallback(() => {
     const token = tokenObj.getAccessToken();
     if (!token) {
-      router.push(Path.Login);
+      router.push(Path.PhoneLogin);
     }
   }, [router]);
   const addThemeSettingInHtml = useCallback(() => {

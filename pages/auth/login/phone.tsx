@@ -7,7 +7,8 @@ import { forwardRef } from "react";
 import Link from "next/link";
 import { Body_Phone_Login } from "@/types/api";
 import AuthService from '@/services/endpoints/AuthService'
-import { phoneCountriesCode } from "@/constants/config";
+import { phoneCountryCodes } from "@/constants/countryCodes";
+import { Path } from "@/constants/enums";
 
 
 type FormValues = {
@@ -79,7 +80,7 @@ const RegisterPage: NextPageWithLayout = () => {
     if (phoneNumber.startsWith("0")) phoneNumber = phoneNumber.slice(1);
 
     login({
-      phone_country_code: phoneCountriesCode.iran,
+      phone_country_code: phoneCountryCodes.Iran,
       phone_number: phoneNumber,
       password: password,
     });
@@ -133,13 +134,13 @@ const RegisterPage: NextPageWithLayout = () => {
                 <Input type="password" error={errors?.password?.message} {...register("password")} />
               </div>
             </div>
-            <div className="text-center mt-2">
+            {/* <div className="text-center mt-2">
               {t("You forgot your password")}
 
-              <Link href="/auth/login2">
+              <Link href="#">
                 <p style={{ color: "#77E9D7", fontWeight: "bold" }}>Forgot password</p>
               </Link>
-            </div>
+            </div> */}
 
             <div className="w-full flex mt-4">
               <button
@@ -158,7 +159,7 @@ const RegisterPage: NextPageWithLayout = () => {
           </form>
           <div className="text-center my-2">
             {t("create new account? ")}{" "}
-            <Link href="/auth/register">
+            <Link href={Path.PhoneRegister}>
               <span style={{ color: "#77E9D7", fontWeight: "bold" }}>Register</span>
             </Link>
           </div>

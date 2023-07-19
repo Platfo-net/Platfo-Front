@@ -149,7 +149,7 @@ const RegisterPage: NextPageWithLayout = () => {
             <div className="text-center mt-2">
               {t("You want to login with your phone number")}
 
-              <Link href="#">
+              <Link href={Path.PhoneLogin}>
                 <p style={{ color: "#77E9D7", fontWeight: "bold" }}>
                   Login with phone number
                 </p>
@@ -183,7 +183,7 @@ const RegisterPage: NextPageWithLayout = () => {
           </form>
           <div className="text-center my-2">
             {t("create new account? ")}{" "}
-            <Link href="/auth/register">
+            <Link href={Path.EmailLogin}>
               <span style={{ color: "#77E9D7", fontWeight: "bold" }}>
                 Register
               </span>

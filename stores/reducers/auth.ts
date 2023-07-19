@@ -20,7 +20,7 @@ const initialState: AuthState = {
 };
 
 const login = createAsyncThunk<Res_Auth_AccessToken, Body_Auth_AccessToken>(
-  'auth/login',
+  'auth/login/email',
   async (data, { rejectWithValue }) => {
     try {
       const response = await AuthService.postEmailLogin(data);
