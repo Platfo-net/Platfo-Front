@@ -3,7 +3,7 @@ import { Modal } from "../feedback/Modal";
 import LoadingCircle from "../feedback/loading/LoadingCircle/LoadingCircle";
 import { AxiosResponse } from "axios";
 import { ICampaign } from "@/types/api";
-import PostmanService from "@/services/endpoints/PostmanService";
+import NotifierService from "@/services/endpoints/NotifierService";
 import { useTranslation } from "next-i18next";
 import { Button } from "../general/Button";
 
@@ -24,7 +24,7 @@ const CampaignDetails: FC<IProps> = ({ campaignId, handleCloseModal}) => {
     if (!campaignId) return;
     try {
       setLoading(true);
-      const response: AxiosResponse<ICampaign> = await PostmanService.getCampaignById(campaignId);
+      const response: AxiosResponse<ICampaign> = await NotifierService.getCampaignById(campaignId);
       console.log(response.data);
       setCampaign(response.data);
       setLoading(false);
@@ -92,7 +92,7 @@ const CampaignDetails: FC<IProps> = ({ campaignId, handleCloseModal}) => {
                         <Button
                           type="button"
                           title={t("edit")}
-                          color="postman"
+                          color="notifier"
                           variant="contained"
                           onClick={() => handleEditCampaign(campaign.id)}
                         />

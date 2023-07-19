@@ -173,12 +173,12 @@ export interface IContactGroup {
   description: string;
   contacts: { profile_image: string, username: string }[];
 }
-export type Res_Postman_Group_FacebookPageId = {
+export type Res_Notifier_Group_FacebookPageId = {
   items: IContactGroup[];
   pagination: Pagination;
 };
 
-export type Body_Postman_Group = {
+export type Body_Notifier_Group = {
   name: string;
   description: string;
   facebook_page_id: string;
@@ -189,7 +189,7 @@ export type Body_Postman_Group = {
 };
 
 
-export type Body_Postman_Campaign = {
+export type Body_Notifier_Campaign = {
   name: string;
   description: string;
   status: string;
@@ -230,7 +230,7 @@ export interface ICampaign {
   seen_count: number;
   total_contact_count: number;
 }
-export type Res_Postman_Campaign_FacebookPageId = {
+export type Res_Notifier_Campaign_FacebookPageId = {
   items: ICampaign[];
   pagination: Pagination;
 };

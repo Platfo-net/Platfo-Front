@@ -11,12 +11,12 @@ export enum Path {
   Archive = "/dashboard/chatbot/archive",
   Contacts = "/dashboard/chatbot/contacts",
   LiveChat = "/dashboard/liveChat",
-  Postman = "/dashboard/postman",
-  PostmanGroups = "/dashboard/postman/groups",
-  PostmanContacts = "/dashboard/postman/contacts",
+  Notifier = "/dashboard/notifier",
+  NotifierGroups = "/dashboard/notifier/groups",
+  NotifierContacts = "/dashboard/notifier/contacts",
   Accounts = "/dashboard/accounts",
   Profile = "/dashboard/profile",
-  Campaign = "/dashboard/postman/campaign",
+  Campaign = "/dashboard/notifier/campaign",
 }
 
 export enum Platform {

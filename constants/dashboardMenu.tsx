@@ -31,12 +31,12 @@ export const sidebarMenu: Menu = {
       icon: "LiveChat",
     },
     {
-      key: "postman",
-      path: Path.PostmanContacts,
+      key: "notifier",
+      path: Path.NotifierContacts,
       isDisable: false,
       type: "link",
-      color: "postman",
-      icon: "Postman",
+      color: "notifier",
+      icon: "Notifier",
     },
   ],
   tools: [
@@ -97,18 +97,18 @@ export const chatbotMenu: IMenu[] = [
   },
 ];
 
-export const postmanMenu: IMenu[] = [
+export const NotifierMenu: IMenu[] = [
   {
     key: "campaign",
     path: Path.Campaign,
   },
   {
     key: "groups",
-    path: Path.PostmanGroups,
+    path: Path.NotifierGroups,
     isDisable: false,
   },
   {
     key: "contacts",
-    path: Path.PostmanContacts,
+    path: Path.NotifierContacts,
   },
 ];

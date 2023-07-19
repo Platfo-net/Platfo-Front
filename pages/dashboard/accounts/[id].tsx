@@ -122,7 +122,7 @@ const AccountDetailsPage: NextPageWithLayout = () => {
                 width="255px"
                 height="255px"
                 click={onEdit}
-                clickColor="secondary"
+                buttonColor="secondary"
                 clickLabel={t("edit")}
                 remove={() => {}}
               >

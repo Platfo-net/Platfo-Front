@@ -1,13 +1,13 @@
 import React, { FC, useEffect, useState } from "react";
 import { Input } from "@/components/dataEntry/Input/Input";
 import { useForm, Controller, useFormState } from "react-hook-form";
-import { Body_Postman_Group, IContact, Res_LiveChat_Contact_All_PageId } from "@/types/api";
+import { Body_Notifier_Group, IContact, Res_LiveChat_Contact_All_PageId } from "@/types/api";
 import { useTranslation } from "next-i18next";
 import { Modal } from "@/components/feedback/Modal";
 import TileButton from "@/components/general/TileButton/TileButton";
 import { AxiosResponse } from "axios";
 import LiveChatService from "@/services/endpoints/LiveChatService";
-import PostmanService from "@/services/endpoints/PostmanService";
+import NotifierService from "@/services/endpoints/NotifierService";
 import { AvatarCheckBox } from "@/components/dataEntry/AvatarCheckBox";
 import { Avatar } from "@/components/dataDisplay/Avatar";
 
@@ -22,7 +22,7 @@ const ContactGroupForm: FC<IProps> = ({ pageId, change }) => {
     control,
     reset,
     formState: { errors },
-  } = useForm<Body_Postman_Group>({
+  } = useForm<Body_Notifier_Group>({
     defaultValues: {
       facebook_page_id: pageId,
     },
@@ -55,12 +55,12 @@ const ContactGroupForm: FC<IProps> = ({ pageId, change }) => {
     modalHandler()
   }
 
-  const submit = async (data: Body_Postman_Group) => {
+  const submit = async (data: Body_Notifier_Group) => {
     const changeData = { ...data, facebook_page_id: pageId };
     changeData.contacts = changeData.contacts.filter((contact) => contact);
     try {
       setLoading(true);
-      await PostmanService.postGroup(changeData);
+      await NotifierService.postGroup(changeData);
       setLoading(false);
       setOpenModal(false);
       resetForm()
@@ -95,7 +95,7 @@ const ContactGroupForm: FC<IProps> = ({ pageId, change }) => {
               <Input
                 label={t("name")}
                 feedback={errors.name?.message}
-                color="postman"
+                color="notifier"
                 status={errors.description?.message ? "danger" : "default"}
                 {...register("name", {
                   required: t("error-required-field"),
@@ -105,7 +105,7 @@ const ContactGroupForm: FC<IProps> = ({ pageId, change }) => {
             <div className="basis-2/3 p-2">
               <Input
                 label={t("description")}
-                color="postman"
+                color="notifier"
                 status={errors.description?.message ? "danger" : "default"}
                 feedback={errors.description?.message}
                 {...register("description", {
@@ -125,7 +125,7 @@ const ContactGroupForm: FC<IProps> = ({ pageId, change }) => {
                       name={`contacts[${index}]` as `contacts`}
                       render={({ field: { onChange } }) => (
                         <AvatarCheckBox
-                          color="postman"
+                          color="notifier"
                           label={contact.information.name || ""}
                           onChange={(e) =>
                             onChange(

@@ -116,7 +116,7 @@ const AccountsPage: NextPageWithLayout = () => {
                 width="255px"
                 height="255px"
                 click={changeRoute}
-                clickColor="secondary"
+                buttonColor="secondary"
                 clickLabel={t("details")}
                 remove={disconnectAccount}
               >

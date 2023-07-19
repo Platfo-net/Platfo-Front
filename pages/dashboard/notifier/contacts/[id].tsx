@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { AxiosResponse } from "axios";
 import { useCallback, useEffect, useState } from "react";
 //import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { postmanMenu } from "@/constants/dashboardMenu";
+import { NotifierMenu } from "@/constants/dashboardMenu";
 import { NextPageWithLayout } from "@/types/next";
 import { Path } from "@/constants/enums";
 import { DashboardLayout } from "@/components/layouts/DashboardLayout";
@@ -122,16 +122,16 @@ export const getStaticProps: GetStaticProps = async context => {
 };
 
 ContactDetailsPage.getLayout = (page) => {
-  const updatePostmanMenu = [
-    ...postmanMenu,
+  const updatenotifierMenu = [
+    ...NotifierMenu,
     {
       key: "contact-info",
-      path: Path.PostmanContacts + "/[id]",
+      path: Path.NotifierContacts + "/[id]",
     },
   ];
   return (
     <DashboardLayout
-      topMenu={updatePostmanMenu}
+      topMenu={updatenotifierMenu}
       meta={{ title: "Contact Details" }}
     >
       {page}

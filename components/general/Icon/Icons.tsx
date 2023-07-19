@@ -482,7 +482,7 @@ const BellRing = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
-const Postman = (props: React.SVGProps<SVGSVGElement>) => (
+const Notifier = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     viewBox="0 0 512 512"
     fill="currentColor"
@@ -623,7 +623,7 @@ export const Icons = {
   Instagram,
   Bell,
   BellRing,
-  Postman,
+  Notifier,
   Comment,
   MapMarkerPlus,
   LiveComment,
@@ -634,5 +634,5 @@ export const Brands = {
   Instagram,
   LiveChat,
   Chatbot,
-  Postman,
+  Notifier,
 };

@@ -1,12 +1,12 @@
 import React, { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { Input } from "@/components/dataEntry/Input/Input";
 import { useForm } from "react-hook-form";
-import { Body_Postman_Campaign, file, IContactGroup, Res_file, Res_Postman_Group_FacebookPageId } from "@/types/api";
+import { Body_Notifier_Campaign, file, IContactGroup, Res_file, Res_Notifier_Group_FacebookPageId } from "@/types/api";
 import { useTranslation } from "next-i18next";
 import { Modal } from "@/components/feedback/Modal";
 import TileButton from "@/components/general/TileButton/TileButton";
 import { AxiosResponse } from "axios";
-import PostmanService from "@/services/endpoints/PostmanService";
+import NotifierService from "@/services/endpoints/NotifierService";
 import { Button } from "../general/Button";
 import { Tile } from "../dataDisplay/Tile";
 import { Typography } from "@/components/general/Typography";
@@ -30,7 +30,7 @@ const CampaignForm: FC<IProps> = ({ submitCallback, page_id }) => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Body_Postman_Campaign>();
+  } = useForm<Body_Notifier_Campaign>();
 
   const { t } = useTranslation("common");
 
@@ -73,7 +73,7 @@ const CampaignForm: FC<IProps> = ({ submitCallback, page_id }) => {
     try {
       setGroups([]);
       setLoading(true);
-      const response: AxiosResponse<Res_Postman_Group_FacebookPageId> = await PostmanService.getGroups(pageId);
+      const response: AxiosResponse<Res_Notifier_Group_FacebookPageId> = await NotifierService.getGroups(pageId);
       setGroups(response.data.items);
       setLoading(false);
     } catch (e) {
@@ -81,10 +81,10 @@ const CampaignForm: FC<IProps> = ({ submitCallback, page_id }) => {
     }
   };
 
-  const createCampaign = async (data: Body_Postman_Campaign) => {
+  const createCampaign = async (data: Body_Notifier_Campaign) => {
     try {
       setLoading(true);
-      const response: AxiosResponse<any> = await PostmanService.postCampaign(data);
+      const response: AxiosResponse<any> = await NotifierService.postCampaign(data);
       console.log(response);
     } catch (e) {
       console.log(e);
@@ -99,11 +99,11 @@ const CampaignForm: FC<IProps> = ({ submitCallback, page_id }) => {
     setSelectedGroupId(null);
   };
 
-  const submit = async (formState: Body_Postman_Campaign) => {
+  const submit = async (formState: Body_Notifier_Campaign) => {
     const { name, description, content } = formState;
     if (!page_id || !selectedGroupId || !imageId) return;
 
-    const campaignData: Body_Postman_Campaign = {
+    const campaignData: Body_Notifier_Campaign = {
       name,
       description,
       facebook_page_id: page_id,
@@ -234,7 +234,7 @@ const CampaignForm: FC<IProps> = ({ submitCallback, page_id }) => {
     return (
       <>
         <div className="mx-1">
-          <Button isDisable={!selectedGroupId} onClick={handleNextStep} size="sm" color="postman" title="Next" />
+          <Button isDisable={!selectedGroupId} onClick={handleNextStep} size="sm" color="notifier" title="Next" />
         </div>
         <div className="mx-1">
           <Button onClick={cancel} size="sm" color="secondary" title="Cancel" />
@@ -247,10 +247,10 @@ const CampaignForm: FC<IProps> = ({ submitCallback, page_id }) => {
     return (
       <>
         <div className="mx-1">
-          <Button onClick={handlePrevStep} size="sm" color="postman" title="Prev" />
+          <Button onClick={handlePrevStep} size="sm" color="notifier" title="Prev" />
         </div>
         <div className="mx-1">
-          <Button onClick={handleSubmit(submit)} size="sm" color="postman" title="Submit" />
+          <Button onClick={handleSubmit(submit)} size="sm" color="notifier" title="Submit" />
         </div>
         <div className="mx-1">
           <Button onClick={cancel} size="sm" color="secondary" title="Cancel" />

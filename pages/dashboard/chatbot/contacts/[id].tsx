@@ -121,7 +121,7 @@ export const getStaticProps: GetStaticProps = async context => {
   return { props: {} };
 };
 ContactDetailsPage.getLayout = (page) => {
-  const updatePostmanMenu = [
+  const updatenotifierMenu = [
     ...chatbotMenu,
     {
       key: "contact-info",
@@ -130,7 +130,7 @@ ContactDetailsPage.getLayout = (page) => {
   ];
   return (
     <DashboardLayout
-      topMenu={updatePostmanMenu}
+      topMenu={updatenotifierMenu}
       meta={{ title: "Contact Details" }}
     >
       {page}

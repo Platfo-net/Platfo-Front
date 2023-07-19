@@ -1,8 +1,8 @@
 import { IIconText } from './IconText';
 
 const base: IIconText = {
-  icon: 'Postman',
-  title: 'postman',
+  icon: 'Notifier',
+  title: 'notifier',
 };
 
 export const mockIconTextProps = {

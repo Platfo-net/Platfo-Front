@@ -144,7 +144,7 @@ const Login2: NextPageWithLayout = () => {
               length={6}
               onComplete={completeCode}
               focus
-              type="text"
+              type="custom"
               inputMode="text"
             />
           </div>

@@ -12,7 +12,7 @@ const withAvatar: ITile = {
   children: <Typography.Text> I`m children </Typography.Text>,
   clickLabel: 'Click',
   click: () => {},
-  clickColor: 'secondary',
+  buttonColor: 'secondary',
 };
 
 export const mockTileProps = {

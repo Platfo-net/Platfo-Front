@@ -69,8 +69,8 @@ const ContactsPage: NextPageWithLayout = () => {
 
   const changeRoute = (contact: IContact) => {
     router.push(
-      Path.PostmanContacts + "/[id]",
-      Path.PostmanContacts + "/" + contact.id
+      Path.NotifierContacts + "/[id]",
+      Path.NotifierContacts + "/" + contact.id
     );
   };
 
@@ -101,7 +101,7 @@ const ContactsPage: NextPageWithLayout = () => {
                   click={changeSelectedAccount}
                   data={account}
                   isActive={account.id === selectedAccount?.id}
-                  color="postman"
+                  color="notifier"
                   icon={
                     Platform[
                       account.platform as unknown as keyof typeof Platform
@@ -131,7 +131,7 @@ const ContactsPage: NextPageWithLayout = () => {
                 width="280px"
                 height="280px"
                 click={changeRoute}
-                clickColor="postman"
+                buttonColor="notifier"
                 clickLabel={t("details")}
               >
                 <div className="flex flex-col text-center w-full">

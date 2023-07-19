@@ -1,18 +1,18 @@
 import { NextPageWithLayout } from "@/types/next";
 //import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { DashboardLayout } from "@/components/layouts/DashboardLayout";
-import { postmanMenu } from "@/constants/dashboardMenu";
+import { NotifierMenu } from "@/constants/dashboardMenu";
 import { Tile } from "@/components/dataDisplay/Tile";
 import { Avatar } from "@/components/dataDisplay/Avatar";
 import { useEffect, useState } from "react";
 import { AxiosResponse } from "axios";
 import { useTranslation } from "next-i18next";
-import { IAccount, ICampaign, Res_Account_All, Res_Postman_Campaign_FacebookPageId } from "@/types/api";
+import { IAccount, ICampaign, Res_Account_All, Res_Notifier_Campaign_FacebookPageId } from "@/types/api";
 import { Typography } from "@/components/general/Typography";
 import BackdropLoading from "@/components/feedback/BackdropLoading/BackdropLoading";
 import AccountService from "@/services/endpoints/AccountService";
 import { Platform } from "@/constants/enums";
-import PostmanService from "@/services/endpoints/PostmanService";
+import NotifierService from "@/services/endpoints/NotifierService";
 import CampaignForm from "@/components/pages/CampaignForm";
 import { Button } from "@/components/general/Button";
 import CampaignDetails from "@/components/pages/CampaginDetail";
@@ -50,7 +50,7 @@ const CampaignsPage: NextPageWithLayout = () => {
   const getCampaigns = async (pageId: string) => {
     try {
       setLoading(true);
-      const response: AxiosResponse<Res_Postman_Campaign_FacebookPageId> = await PostmanService.getCampaigns({
+      const response: AxiosResponse<Res_Notifier_Campaign_FacebookPageId> = await NotifierService.getCampaigns({
         facebook_page_id: pageId,
       });
       console.log(response.data);
@@ -64,7 +64,7 @@ const CampaignsPage: NextPageWithLayout = () => {
   const getCampaign = async (campaignId: string) => {
     try {
       setLoading(true);
-      const response: AxiosResponse<Res_Postman_Campaign_FacebookPageId> = await PostmanService.getCampaignById(
+      const response: AxiosResponse<Res_Notifier_Campaign_FacebookPageId> = await NotifierService.getCampaignById(
         campaignId
       );
       console.log(response.data);
@@ -106,7 +106,7 @@ const CampaignsPage: NextPageWithLayout = () => {
                   click={changeSelectedAccount}
                   data={account}
                   isActive={account.id === selectedAccount?.id}
-                  color="postman"
+                  color="notifier"
                   icon={Platform[account.platform as unknown as keyof typeof Platform]}
                   title={account.username}
                 />
@@ -129,7 +129,7 @@ const CampaignsPage: NextPageWithLayout = () => {
               <Tile data={campaign} width="255px" height="255px" clickLabel={t("details")}>
                 <div className="flex flex-col text-center w-full">
                   <div className="w-full flex justify-center mb-6">
-                    <Avatar url={""} type="image" color="postman" size={6} />
+                    <Avatar url={""} type="image" color="notifier" size={6} />
                   </div>
                   <Text weight="semiBold"> {campaign.name} </Text>
                   <Text className="mt-5" weight="semiBold">
@@ -140,7 +140,7 @@ const CampaignsPage: NextPageWithLayout = () => {
                     className="mx-6"
                     width="full"
                     title={t("details")}
-                    color="postman"
+                    color="notifier"
                     variant="contained"
                     onClick={() => setSelectedCampaignId(campaign.id)}
                   />
@@ -158,7 +158,7 @@ export default CampaignsPage;
 
 CampaignsPage.getLayout = (page) => {
   return (
-    <DashboardLayout topMenu={postmanMenu} meta={{ title: "Campaigns" }} color="postman">
+    <DashboardLayout topMenu={NotifierMenu} meta={{ title: "Campaigns" }} color="notifier">
       {page}
     </DashboardLayout>
   );

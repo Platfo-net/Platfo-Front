@@ -14,7 +14,7 @@ export interface ITile {
   avatar?: ReactElement;
   children?: ReactElement;
   clickLabel?: string;
-  clickColor?: Color;
+  buttonColor?: Color;
   className?: string;
   isClickDisable?: boolean;
   // eslint-disable-next-line no-unused-vars
@@ -64,18 +64,18 @@ const Footer = styled.footer``;
 export const Tile: FC<ITile> = ({
   data,
   title,
-  width = '100%',
-  height = 'auto',
+  width = "100%",
+  height = "auto",
   avatar,
   children,
   remove,
   click,
-  clickLabel = '',
-  clickColor = 'primary',
-  className = '',
+  clickLabel = "",
+  buttonColor = "notifier",
+  className = "",
   isClickDisable = false,
 }) => {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
   const [isVisible, setIsVisible] = useState(false);
 
   return (
@@ -101,13 +101,13 @@ export const Tile: FC<ITile> = ({
                     submitKey="yes"
                     cancelKey="no"
                     submit={() => {
-                      remove(data)
-                      setIsVisible(false)
+                      remove(data);
+                      setIsVisible(false);
                     }}
                   >
                     <div className="py-4">
                       <Typography.Text>
-                        {t('are-you-sure-to-delete')}
+                        {t("are-you-sure-to-delete")}
                       </Typography.Text>
                     </div>
                   </Modal>
@@ -127,7 +127,7 @@ export const Tile: FC<ITile> = ({
       {click && (
         <Footer>
           <Button
-            color={clickColor}
+            color={buttonColor}
             title={clickLabel}
             onClick={() => click(data)}
             width="100%"

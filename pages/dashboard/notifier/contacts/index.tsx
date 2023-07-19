@@ -1,32 +1,35 @@
 import { NextPageWithLayout } from "@/types/next";
 //import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { DashboardLayout } from "@/components/layouts/DashboardLayout";
-import { postmanMenu } from "@/constants/dashboardMenu";
+import { NotifierMenu } from "@/constants/dashboardMenu";
 import { Tile } from "@/components/dataDisplay/Tile";
 import { Avatar } from "@/components/dataDisplay/Avatar";
+import { useTranslation } from "next-i18next";
 import { useEffect, useState } from "react";
 import { AxiosResponse } from "axios";
 import {
   IAccount,
-  IContactGroup,
+  IContact,
   Res_Account_All,
-  Res_Postman_Group_FacebookPageId,
+  Res_LiveChat_Contact_All_PageId,
 } from "@/types/api";
 import { Typography } from "@/components/general/Typography";
 import BackdropLoading from "@/components/feedback/BackdropLoading/BackdropLoading";
 import AccountService from "@/services/endpoints/AccountService";
-import { Platform } from "@/constants/enums";
-import PostmanService from "@/services/endpoints/PostmanService";
-import ContactGroupForm from "@/components/pages/ContactGroupForm";
-import { AvatarGroup } from "@/components/dataDisplay/AvatarGroup";
+import LiveChatService from "@/services/endpoints/LiveChatService";
+import IconText from "@/components/dataDisplay/IconText/IconText";
+import { Path, Platform } from "@/constants/enums";
+import { useRouter } from "next/router";
 
 const { Text } = Typography;
 
-const GroupsPage: NextPageWithLayout = () => {
+const ContactsPage: NextPageWithLayout = () => {
+  const { t } = useTranslation("common");
   const [loading, setLoading] = useState(false);
   const [accounts, setAccounts] = useState<Res_Account_All>([]);
-  const [groups, setGroups] = useState<IContactGroup[]>([]);
+  const [contacts, setContacts] = useState<IContact[]>([]);
   const [selectedAccount, setSelectedAccount] = useState<IAccount>();
+  const router = useRouter();
 
   const getAccounts = async () => {
     try {
@@ -47,12 +50,12 @@ const GroupsPage: NextPageWithLayout = () => {
     }
   };
 
-  const getGroups = async (pageId: string) => {
+  const getContacts = async (pageId: string) => {
     try {
       setLoading(true);
-      const response: AxiosResponse<Res_Postman_Group_FacebookPageId> =
-        await PostmanService.getGroups(pageId);
-      setGroups(response.data.items);
+      const response: AxiosResponse<Res_LiveChat_Contact_All_PageId> =
+        await LiveChatService.getContacts(pageId);
+      setContacts(response.data.items);
       setLoading(false);
     } catch (e) {
       setLoading(false);
@@ -60,23 +63,15 @@ const GroupsPage: NextPageWithLayout = () => {
   };
 
   const changeSelectedAccount = async (account: IAccount) => {
-    await getGroups(account.facebook_page_id);
-
+    await getContacts(account.facebook_page_id);
     setSelectedAccount(account);
   };
 
-  const removeGroup = async (group: IContactGroup) => {
-    if(!selectedAccount?.facebook_page_id) return 
-    try {
-      setLoading(true);
-      await PostmanService.deleteGroup(group.id);
-      await getAccounts();
-      setLoading(false);
-      await getGroups(selectedAccount?.facebook_page_id)
-    } catch (e) {
-      await getGroups(selectedAccount?.facebook_page_id)
-      setLoading(false);
-    }
+  const changeRoute = (contact: IContact) => {
+    router.push(
+      Path.NotifierContacts + "/[id]",
+      Path.NotifierContacts + "/" + contact.id
+    );
   };
 
   useEffect(() => {
@@ -84,13 +79,12 @@ const GroupsPage: NextPageWithLayout = () => {
       const firstAccount = await getAccounts();
       if (firstAccount) {
         setSelectedAccount(firstAccount);
-        await getGroups(firstAccount.facebook_page_id);
+        await getContacts(firstAccount.facebook_page_id);
       } else {
-        setGroups([]);
+        setContacts([]);
       }
     })();
   }, []);
-  
 
   return (
     <>
@@ -107,7 +101,7 @@ const GroupsPage: NextPageWithLayout = () => {
                   click={changeSelectedAccount}
                   data={account}
                   isActive={account.id === selectedAccount?.id}
-                  color="postman"
+                  color="notifier"
                   icon={
                     Platform[
                       account.platform as unknown as keyof typeof Platform
@@ -122,42 +116,40 @@ const GroupsPage: NextPageWithLayout = () => {
       )}
 
       <div className="flex flex-wrap">
-        {selectedAccount && (
-          <div className="basis-1/6 m-3 ">
-            <ContactGroupForm
-              pageId={selectedAccount.facebook_page_id}
-              change={() => getGroups(selectedAccount.facebook_page_id)}
-            />
-          </div>
-        )}
-
-        {groups?.map((group) => {
+        {contacts?.map((contact) => {
           return (
-            <div className="basis-1/6 m-3" key={group.id}>
+            <div className="basis-1/6 m-3" key={contact.id}>
               <Tile
-                data={group}
+                data={contact}
                 avatar={
-                  <AvatarGroup
-                    urlKey="profile_image"
-                    size={5}
-                    count={10}
-                    data={group.contacts}
-                    nameKey="username"
-                    className="mt-5"
+                  <Avatar
+                    url={contact.information.profile_image}
+                    size={6}
+                    type="image"
                   />
                 }
-                width="255px"
-                height="255px"
-                // click={changeRoute}
-                // clickColor="postman"
-                // clickLabel={t('details')}
-                remove={removeGroup}
+                width="280px"
+                height="280px"
+                click={changeRoute}
+                buttonColor="notifier"
+                clickLabel={t("details")}
               >
                 <div className="flex flex-col text-center w-full">
-                  <Text weight="semiBold"> {group.name} </Text>
-                  <Text weight="light" color="nonActive">
-                    {group.description}
-                  </Text>
+                  <Text weight="semiBold"> {contact.information.name} </Text>
+                  <div className="flex justify-between mt-4 mx-4 ">
+                    <IconText
+                      icon="Comment"
+                      title={contact.comment_count.toString()}
+                    />
+                    <IconText
+                      icon="PaperPlane"
+                      title={contact.message_count.toString()}
+                    />
+                    <IconText
+                      icon="LiveComment"
+                      title={contact.live_comment_count.toString()}
+                    />
+                  </div>
                 </div>
               </Tile>
             </div>
@@ -168,7 +160,7 @@ const GroupsPage: NextPageWithLayout = () => {
   );
 };
 
-export default GroupsPage;
+export default ContactsPage;
 
 // export const getStaticProps = async ({ locale }: { locale: string }) => {
 //   return {
@@ -178,12 +170,12 @@ export default GroupsPage;
 //   };
 // };
 
-GroupsPage.getLayout = (page) => {
+ContactsPage.getLayout = (page) => {
   return (
     <DashboardLayout
-      topMenu={postmanMenu}
-      meta={{ title: "Groups" }}
-      color="postman"
+      topMenu={NotifierMenu}
+      meta={{ title: "Notifier" }}
+      color="notifier"
     >
       {page}
     </DashboardLayout>

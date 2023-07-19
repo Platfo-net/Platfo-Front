@@ -83,7 +83,7 @@ const ChatbotPage: NextPageWithLayout = () => {
                 width="255px"
                 height="255px"
                 click={() => {}}
-                clickColor="chatbot"
+                buttonColor="chatbot"
                 clickLabel={t("details")}
                 remove={removeChatflow}
               >

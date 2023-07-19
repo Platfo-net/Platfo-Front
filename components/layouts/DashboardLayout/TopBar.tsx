@@ -10,7 +10,7 @@ import { getIsRtl } from '@/styles/globals';
 
 interface ITopBar {
   data: IMenu[];
-  color?: 'secondary' | 'chatbot' | 'liveChat' | 'postman';
+  color?: 'secondary' | 'chatbot' | 'liveChat' | 'notifier';
 }
 
 const isRtl = getIsRtl();
