@@ -5,39 +5,43 @@ import { useTranslation } from "next-i18next";
 import { useForm, Resolver } from "react-hook-form";
 import { forwardRef } from "react";
 import Link from "next/link";
-import { Body_Phone_Login } from "@/types/api";
-import AuthService from '@/services/endpoints/AuthService'
+import { Body_Phone_Login, Res_Auth_AccessToken } from "@/types/api";
+import AuthService from "@/services/endpoints/AuthService";
 import { phoneCountryCodes } from "@/constants/countryCodes";
 import { Path } from "@/constants/enums";
-
+import { AxiosResponse } from "axios";
+import { tokenObj } from "@/lib/token";
+import { useRouter } from "next/router";
 
 type FormValues = {
   phone: string;
   password: string;
 };
 
-const Input: any = forwardRef(({ error, ...rest }: { error: string }, ref: any) => {
-  return (
-    <div>
-      <input
-        ref={ref}
-        style={{
-          borderRadius: "1rem",
-          height: "3.5rem",
-          width: "100%",
-          padding: ".5rem",
-          background: "rgba(139, 202, 193 , .24)",
-        }}
-        {...rest}
-      />
-      <p style={{ color: "red" }}>{error ? error : ""}</p>
-    </div>
-  );
-});
+const Input: any = forwardRef(
+  ({ error, ...rest }: { error: string }, ref: any) => {
+    return (
+      <div>
+        <input
+          ref={ref}
+          style={{
+            borderRadius: "1rem",
+            height: "3.5rem",
+            width: "100%",
+            padding: ".5rem",
+            background: "rgba(139, 202, 193 , .24)",
+          }}
+          {...rest}
+        />
+        <p style={{ color: "red" }}>{error ? error : ""}</p>
+      </div>
+    );
+  }
+);
 
 const resolver: Resolver<FormValues> = async (values) => {
   return {
-    values: (values.phone && values.password) ? values : {},
+    values: values.phone && values.password ? values : {},
     errors: !values.phone
       ? {
           phone: {
@@ -56,17 +60,6 @@ const resolver: Resolver<FormValues> = async (values) => {
   };
 };
 
-
-const login = async (data: Body_Phone_Login) => {
-    try {
-      const res = await AuthService.postPhoneLogin(data);
-      console.log(res);
-      // TODO redirect to app
-    } catch (e) {
-        console.log(e);
-      }
-};
-
 const RegisterPage: NextPageWithLayout = () => {
   const {
     register,
@@ -74,9 +67,22 @@ const RegisterPage: NextPageWithLayout = () => {
     formState: { errors },
   } = useForm<FormValues>({ resolver });
 
-  const onSubmit = handleSubmit((data)=>{
-    const {password} = data
-    let phoneNumber = data.phone
+  const router = useRouter()
+
+  const login = async (data: Body_Phone_Login) => {
+    try {
+      const response: AxiosResponse<Res_Auth_AccessToken> =
+        await AuthService.postPhoneLogin(data);
+        tokenObj.setToken(response.data.access_token);
+      router.push({ pathname: Path.Accounts });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const onSubmit = handleSubmit((data) => {
+    const { password } = data;
+    let phoneNumber = data.phone;
     if (phoneNumber.startsWith("0")) phoneNumber = phoneNumber.slice(1);
 
     login({
@@ -84,9 +90,7 @@ const RegisterPage: NextPageWithLayout = () => {
       phone_number: phoneNumber,
       password: password,
     });
-
-
-  })
+  });
 
   const { t } = useTranslation("common");
 
@@ -106,7 +110,14 @@ const RegisterPage: NextPageWithLayout = () => {
           zIndex: 1,
         }}
       />
-      <div style={{ position: "absolute", zIndex: 10000, width: "100%", height: "100%" }}>
+      <div
+        style={{
+          position: "absolute",
+          zIndex: 10000,
+          width: "100%",
+          height: "100%",
+        }}
+      >
         <div
           style={{
             width: "90%",
@@ -119,9 +130,18 @@ const RegisterPage: NextPageWithLayout = () => {
             boxShadow: "0px 0px 20px rgba(0,0,0,.4)",
           }}
         >
-          <h1 className="mt-5" style={{ fontSize: "3rem", color: "black", textAlign: "center" }}>{t("Login")}</h1>
-          <p className="mt-1" style={{ color: "black", textAlign: "center" }}>{t(`We are very happy to see you again.`)}</p>
-          <p className="mt-1" style={{ color: "black", textAlign: "center" }}>{t(`Let's go`)}</p>
+          <h1
+            className="mt-5"
+            style={{ fontSize: "3rem", color: "black", textAlign: "center" }}
+          >
+            {t("Login")}
+          </h1>
+          <p className="mt-1" style={{ color: "black", textAlign: "center" }}>
+            {t(`We are very happy to see you again.`)}
+          </p>
+          <p className="mt-1" style={{ color: "black", textAlign: "center" }}>
+            {t(`Let's go`)}
+          </p>
 
           <form className="mt-7" onSubmit={onSubmit}>
             <div className="px-3">
@@ -131,7 +151,11 @@ const RegisterPage: NextPageWithLayout = () => {
               </div>
               <div className="my-3">
                 <div className="ml-3 text-black">password</div>
-                <Input type="password" error={errors?.password?.message} {...register("password")} />
+                <Input
+                  type="password"
+                  error={errors?.password?.message}
+                  {...register("password")}
+                />
               </div>
             </div>
             {/* <div className="text-center mt-2">
@@ -160,7 +184,9 @@ const RegisterPage: NextPageWithLayout = () => {
           <div className="text-center my-2">
             {t("create new account? ")}{" "}
             <Link href={Path.PhoneRegister}>
-              <span style={{ color: "#77E9D7", fontWeight: "bold" }}>Register</span>
+              <span style={{ color: "#77E9D7", fontWeight: "bold" }}>
+                Register
+              </span>
             </Link>
           </div>
         </div>
