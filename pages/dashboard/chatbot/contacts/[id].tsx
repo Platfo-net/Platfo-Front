@@ -49,7 +49,7 @@ const ContactDetailsPage: NextPageWithLayout = () => {
       <BackdropLoading loading={loading} />
       {contactInfo && (
         <InfoSection
-          username={contactInfo.information.username}
+          username={contactInfo.username}
           follows={contactInfo.information.follows_count}
           name={contactInfo.information.name}
           avatar={

@@ -74,24 +74,24 @@ export const sidebarMenu: Menu = {
 
 export const accountsMenu: IMenu[] = [
   {
-    key: "accounts",
+    key: "Accounts",
     path: Path.Accounts,
   },
 ];
 
 export const chatbotMenu: IMenu[] = [
   {
-    key: "chatbot",
+    key: "Chatbot",
     path: Path.Chatbot,
     isDisable: true,
   },
   {
-    key: "archive",
+    key: "Archive",
     path: Path.Archive,
-    isDisable: false,
+    isDisable: true,
   },
   {
-    key: "contacts",
+    key: "Contacts",
     path: Path.Contacts,
     isDisable: false,
   },
@@ -99,16 +99,16 @@ export const chatbotMenu: IMenu[] = [
 
 export const NotifierMenu: IMenu[] = [
   {
-    key: "campaign",
+    key: "Campaign",
     path: Path.Campaign,
   },
   {
-    key: "groups",
+    key: "Groups",
     path: Path.NotifierGroups,
     isDisable: false,
   },
   {
-    key: "contacts",
+    key: "Contacts",
     path: Path.NotifierContacts,
   },
 ];

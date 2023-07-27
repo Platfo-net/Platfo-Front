@@ -269,7 +269,7 @@ const CampaignForm: FC<IProps> = ({ submitCallback, page_id }) => {
 
   return (
     <>
-      <TileButton title={t("Add New Group")} onClick={modalHandler} />
+      <TileButton title={t("Add New Campaign")} onClick={modalHandler} />
       <form onSubmit={handleSubmit(submit)}>
         <Modal isVisible={openModal} width="max(800px , 50%)" height="500px" isLoading={loading}>
           <div className="w-full flex flex-col justify-between	h-full" style={{ height: 460 }}>

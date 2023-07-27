@@ -76,7 +76,6 @@ export interface IInformation {
   follows_count?: number;
   biography?: string;
   name?: string;
-  username?: string;
   profile_image?: string;
   is_verified_user?: boolean;
   is_user_follow_business?: boolean;
@@ -97,6 +96,7 @@ export type Res_Account_Id = {
   platform: string;
   profile_image: string;
   page_id: string;
+  username?: string;
   information: IInformation;
 };
 
@@ -157,6 +157,7 @@ export interface IContact {
   //Todo ask type
   first_impression?: string;
   last_message_at: string;
+  username?: string;
   information: IInformation;
   last_message?: string;
 }

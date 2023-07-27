@@ -57,7 +57,7 @@ const ContactGroupForm: FC<IProps> = ({ pageId, change }) => {
 
   const submit = async (data: Body_Notifier_Group) => {
     const changeData = { ...data, facebook_page_id: pageId };
-    changeData.contacts = changeData.contacts.filter((contact) => contact);
+    changeData.contacts = changeData?.contacts?.filter((contact) => contact) ?? [];
     try {
       setLoading(true);
       await NotifierService.postGroup(changeData);
