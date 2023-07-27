@@ -89,7 +89,8 @@ const PhoneNumberRegister: NextPageWithLayout = () => {
       const {phone} = getValues()
       router.push({ pathname: "/auth/register/verify", query: { phone } });
     } catch (e: any) {
-      const isUserInActive = e.response.status === 400;
+      console.log({e})
+      const isUserInActive = e?.response?.status === 400;
       if(isUserInActive){
         const {phone} = getValues()
         router.push({ pathname: "/auth/register/verify", query: { phone } });
@@ -117,8 +118,8 @@ const PhoneNumberRegister: NextPageWithLayout = () => {
       <Image
         alt="login image"
         src={LoginImage.src}
-        width={1000}
-        height={1000}
+        width={2000}
+        height={2000}
         style={{
           position: "absolute",
           top: 0,
@@ -177,7 +178,7 @@ const PhoneNumberRegister: NextPageWithLayout = () => {
               </button>
             </div>
             <div className="text-center my-2">
-              {t("have an account")}{" "}
+              {t("Have An Account")}{" "}
               <Link href={Path.PhoneLogin}>
                 {" "}
                 <span style={{ color: "#77E9D7", fontWeight: "bold" }}>Login</span>

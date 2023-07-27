@@ -132,7 +132,7 @@ const ContactsPage: NextPageWithLayout = () => {
                 height="280px"
                 click={changeRoute}
                 buttonColor="notifier"
-                clickLabel={t("details")}
+                clickLabel={t("Details")}
               >
                 <div className="flex flex-col text-center w-full">
                   <Text weight="semiBold"> {contact.information.name} </Text>

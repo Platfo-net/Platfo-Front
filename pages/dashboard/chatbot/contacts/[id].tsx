@@ -70,7 +70,7 @@ const ContactDetailsPage: NextPageWithLayout = () => {
                     isTrue={contactInfo.information.is_verified_user}
                     className="my-1"
                   />
-                  <Text>{t("is_verified_user")}</Text>
+                  <Text>{t("Is Verified")}</Text>
                 </li>
               )}
               {contactInfo.information.is_user_follow_business !==
@@ -80,7 +80,7 @@ const ContactDetailsPage: NextPageWithLayout = () => {
                     isTrue={contactInfo.information.is_user_follow_business}
                     className="my-1"
                   />
-                  <Text>{t("is_user_follow_business")}</Text>
+                  <Text>{t("Is User Follow Business")}</Text>
                 </li>
               )}
               {contactInfo.information.is_business_follow_user !==
@@ -90,7 +90,7 @@ const ContactDetailsPage: NextPageWithLayout = () => {
                     isTrue={contactInfo.information.is_business_follow_user}
                     className="my-1"
                   />
-                  <Text>{t("is_business_follow_user")}</Text>
+                  <Text>{t("Is Business Follow User")}</Text>
                 </li>
               )}
             </ul>

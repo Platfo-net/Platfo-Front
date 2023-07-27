@@ -94,7 +94,7 @@ const AccountsPage: NextPageWithLayout = () => {
       <BackdropLoading loading={loading} />
       <div className="flex flex-wrap">
         <div className="basis-1/6 m-3 ">
-          <TileButton onClick={addAccount} title={t("add-new-account")} />
+          <TileButton onClick={addAccount} title={t("Add New Account")} />
         </div>
         {accounts?.map((account) => {
           return (
@@ -117,7 +117,7 @@ const AccountsPage: NextPageWithLayout = () => {
                 height="255px"
                 click={changeRoute}
                 buttonColor="secondary"
-                clickLabel={t("details")}
+                clickLabel={t("Details")}
                 remove={disconnectAccount}
               >
                 <Text weight="semiBold"> {account.username} </Text>

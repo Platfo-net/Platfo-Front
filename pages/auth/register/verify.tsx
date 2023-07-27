@@ -11,6 +11,7 @@ import { useCountDown } from "@/components/hooks/useCountDown";
 import { timerFormatter } from "@/utils/timerFormatter";
 import ReactPin from "react-pin-input";
 import { tokenObj } from "@/lib/token";
+import { Path } from "@/constants/enums";
 
 const Login2: NextPageWithLayout = () => {
   const router = useRouter();
@@ -38,7 +39,7 @@ const Login2: NextPageWithLayout = () => {
       const response = await AuthService.postActivateBySMS(data);
       if(response.status === 200){
         tokenObj.setToken(smsToken);
-        router.push({ pathname: "/dashboard" });
+        router.push({ pathname: Path.PhoneLogin });
       }
     }catch(e){
         console.log(e);
@@ -72,8 +73,8 @@ const Login2: NextPageWithLayout = () => {
       <Image
         alt="login image"
         src={LoginImage.src}
-        width={1000}
-        height={1000}
+        width={2000}
+        height={2000}
         style={{
           position: "absolute",
           top: 0,
@@ -161,13 +162,6 @@ const Login2: NextPageWithLayout = () => {
             style={{ color: "black", textAlign: "center" }}
           >
             {timerFormatter(timeLeft)}
-          </p>
-
-          <p
-            className="mt-3 mx-4"
-            style={{ color: "black", textAlign: "center" }}
-          >
-            {t(`resend code`)}
           </p>
         </div>
       </div>

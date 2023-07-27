@@ -86,8 +86,8 @@ const RegisterPage: NextPageWithLayout = () => {
       <Image
         alt="login image"
         src={LoginImage.src}
-        width={1000}
-        height={1000}
+        width={2000}
+        height={2000}
         style={{
           position: "absolute",
           top: 0,
@@ -182,7 +182,7 @@ const RegisterPage: NextPageWithLayout = () => {
             </div>
           </form>
           <div className="text-center my-2">
-            {t("create new account? ")}{" "}
+            {t("Create New Account ?")}{" "}
             <Link href={Path.EmailLogin}>
               <span style={{ color: "#77E9D7", fontWeight: "bold" }}>
                 Register

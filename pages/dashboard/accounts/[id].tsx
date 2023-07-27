@@ -94,13 +94,13 @@ const AccountDetailsPage: NextPageWithLayout = () => {
 
       <div className="flex m-5">
         <Title level="h2" size="lg" weight="semiBold">
-          {t("connections")}
+          {t("Connections")}
         </Title>
       </div>
 
       <div className="flex flex-wrap">
         <div className="basis-1/6 m-3 ">
-          <TileButton onClick={modalHandler} title={t("add-new-connection")} />
+          <TileButton onClick={modalHandler} title={t("Add New Connection")} />
         </div>
         {connections?.map((connection) => {
           return (
@@ -123,7 +123,7 @@ const AccountDetailsPage: NextPageWithLayout = () => {
                 height="255px"
                 click={onEdit}
                 buttonColor="secondary"
-                clickLabel={t("edit")}
+                clickLabel={t("Edit")}
                 remove={() => {}}
               >
                 <div className="flex flex-col">
@@ -141,7 +141,7 @@ const AccountDetailsPage: NextPageWithLayout = () => {
       <Modal
         isVisible={openModal}
         cancel={modalHandler}
-        title={record ? t("edit-connection") : t("add-new-connection")}
+        title={record ? t("Edit Connection") : t("Add New Connection")}
         submit={() => {}}
         width="50%"
       >

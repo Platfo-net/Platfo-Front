@@ -53,37 +53,37 @@ const CampaignDetails: FC<IProps> = ({ campaignId, handleCloseModal}) => {
                     <span className="font-bold w-full flex justify-center my-2">{campaign?.name}</span>
 
                     <div className="flex justify-between w-full my-2">
-                      <span>{t("description")}</span>
+                      <span>{t("Description")}</span>
                       <span>{campaign?.description}</span>
                     </div>
 
                     <div className="flex justify-between w-full my-2">
-                      <span>{t("content")}</span>
+                      <span>{t("Content")}</span>
                       <span>{campaign?.content.text}</span>
                     </div>
 
                     <div className="flex justify-between w-full my-2">
-                      <span>{t("status")}</span>
+                      <span>{t("Satus")}</span>
                       <span>{campaign?.status}</span>
                     </div>
 
                     <div className="flex justify-between w-full my-2">
-                      <span>{t("total-contact-count")}</span>
+                      <span>{t("Total Contact Count")}</span>
                       <span>{campaign?.total_contact_count}</span>
                     </div>
 
                     <div className="flex justify-between w-full my-2">
-                      <span>{t("sent-count")}</span>
+                      <span>{t("Sent Count")}</span>
                       <span>{campaign?.sent_count}</span>
                     </div>
 
                     <div className="flex justify-between w-full my-2">
-                      <span>{t("seen-count")}</span>
+                      <span>{t("Seen Count")}</span>
                       <span>{campaign?.seen_count}</span>
                     </div>
 
                     <div className="flex justify-between w-full my-2">
-                      <span>{t("created-at")}</span>
+                      <span>{t("Created At")}</span>
                       <span>{new Date(campaign?.created_at ?? "").toLocaleDateString("en")}</span>
                     </div>
 
@@ -91,7 +91,7 @@ const CampaignDetails: FC<IProps> = ({ campaignId, handleCloseModal}) => {
                       {/* <div className="mx-2">
                         <Button
                           type="button"
-                          title={t("edit")}
+                          title={t("Edit")}
                           color="notifier"
                           variant="contained"
                           onClick={() => handleEditCampaign(campaign.id)}
@@ -101,7 +101,7 @@ const CampaignDetails: FC<IProps> = ({ campaignId, handleCloseModal}) => {
                       <div className="mx-2">
                         <Button
                           type="button"
-                          title={t("cancel")}
+                          title={t("Cancel")}
                           color="secondary"
                           variant="contained"
                           onClick={() => handleCloseModal()}

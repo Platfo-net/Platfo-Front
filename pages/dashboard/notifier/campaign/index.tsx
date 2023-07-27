@@ -126,7 +126,7 @@ const CampaignsPage: NextPageWithLayout = () => {
         {campaigns?.map((campaign) => {
           return (
             <div className="basis-1/6 m-3" key={campaign.id}>
-              <Tile data={campaign} width="255px" height="255px" clickLabel={t("details")}>
+              <Tile data={campaign} width="255px" height="255px" clickLabel={t("Details")}>
                 <div className="flex flex-col text-center w-full">
                   <div className="w-full flex justify-center mb-6">
                     <Avatar url={""} type="image" color="notifier" size={6} />
@@ -139,7 +139,7 @@ const CampaignsPage: NextPageWithLayout = () => {
                     type="button"
                     className="mx-6"
                     width="full"
-                    title={t("details")}
+                    title={t("Details")}
                     color="notifier"
                     variant="contained"
                     onClick={() => setSelectedCampaignId(campaign.id)}

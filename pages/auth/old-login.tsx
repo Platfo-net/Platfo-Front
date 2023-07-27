@@ -43,7 +43,7 @@ const LoginPage: NextPageWithLayout = () => {
         weight="bold"
         className="flex justify-center mb-4"
       >
-        {t("login")}
+        {t("Login")}
       </Typography.Title>
       <form className="px-16 pb-0 my-8" onSubmit={handleSubmit(submit)}>
         <div className="mb-10">
@@ -52,10 +52,10 @@ const LoginPage: NextPageWithLayout = () => {
             feedback={errors.email?.message}
             color={errors.email?.message ? "danger" : "default"}
             {...register("email", {
-              required: t("error-required-field"),
+              required: t("Error Required Field"),
               pattern: {
                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: t("error-invalid-email"),
+                message: t("Error Invalid Email"),
               },
             })}
           />
@@ -66,15 +66,15 @@ const LoginPage: NextPageWithLayout = () => {
             color={errors.password?.message ? "danger" : "default"}
             feedback={errors.password?.message}
             {...register("password", {
-              required: t("error-required-field"),
-              minLength: { value: 3, message: t("error-min-length") },
+              required: t("Error Required Field"),
+              minLength: { value: 3, message: t("Error Min Length") },
             })}
           />
         </div>
         <div className="flex flex-col items-center justify-between mt-10">
           <Button
             type="submit"
-            title={t("login")}
+            title={t("Login")}
             color="secondary"
             width="100%"
             className="mb-4"

@@ -80,12 +80,12 @@ const ContactGroupForm: FC<IProps> = ({ pageId, change }) => {
 
   return (
     <>
-      <TileButton title={t("add-new-group")} onClick={modalHandler} />
+      <TileButton title={t("Add New Group")} onClick={modalHandler} />
       <form onSubmit={handleSubmit(submit)}>
         <Modal
           isVisible={openModal}
           cancel={handleCancel}
-          title={t("add-new-group")}
+          title={t("Add New Group")}
           width="50%"
           submitType="submit"
           isLoading={loading}
@@ -93,24 +93,24 @@ const ContactGroupForm: FC<IProps> = ({ pageId, change }) => {
           <div className="flex flex-wrap  w-full">
             <div className="basis-1/3 p-2">
               <Input
-                label={t("name")}
+                label={t("Name")}
                 feedback={errors.name?.message}
                 color="notifier"
                 status={errors.description?.message ? "danger" : "default"}
                 {...register("name", {
-                  required: t("error-required-field"),
+                  required: t("Error Required Field"),
                 })}
               />
             </div>
             <div className="basis-2/3 p-2">
               <Input
-                label={t("description")}
+                label={t("Description")}
                 color="notifier"
                 status={errors.description?.message ? "danger" : "default"}
                 feedback={errors.description?.message}
                 {...register("description", {
-                  required: t("error-required-field"),
-                  minLength: { value: 3, message: t("error-min-length") },
+                  required: t("Error Required Field"),
+                  minLength: { value: 3, message: t("Error Min Length") },
                 })}
               />
             </div>

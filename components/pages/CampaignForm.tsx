@@ -137,7 +137,7 @@ const CampaignForm: FC<IProps> = ({ submitCallback, page_id }) => {
   const ChooseGroupStep: FC = () => {
     return (
       <div>
-        <h2>{t("choose-group")}</h2>
+        <h2>{t("Choose Group")}</h2>
         <div className="flex w-full overflow-x-scroll">
           {groups?.map((group) => {
             return (
@@ -175,24 +175,24 @@ const CampaignForm: FC<IProps> = ({ submitCallback, page_id }) => {
   const ChooseContentStep: FC = () => {
     return (
       <div>
-        <h2>{t("choose-content")}</h2>
+        <h2>{t("Choose Content")}</h2>
         <div className="flex flex-col">
           <div className="flex-auto m-auto w-4/5">
             <Input
-              label={t("name")}
+              label={t("Name")}
               color={errors.name?.message ? "danger" : "default"}
               {...register("name", {
-                required: t("error-required-field"),
+                required: t("Error Required Field"),
               })}
             />
           </div>
 
           <div className="flex-auto m-auto w-4/5 ">
             <Input
-              label={t("description")}
+              label={t("Description")}
               color={errors.name?.message ? "danger" : "default"}
               {...register("description", {
-                required: t("error-required-field"),
+                required: t("Error Required Field"),
               })}
             />
           </div>
@@ -200,16 +200,16 @@ const CampaignForm: FC<IProps> = ({ submitCallback, page_id }) => {
           <div className="flex-auto m-auto w-4/5 ">
             <TextArea
               rows={3}
-              label={t("content")}
+              label={t("Contact")}
               color={errors.name?.message ? "danger" : "default"}
               {...register("content.text", {
-                required: t("error-required-field"),
+                required: t("Error Required Field"),
               })}
             />
           </div>
 
           <div className="flex-auto m-auto w-4/5 ">
-            <p>{t("upload-your-photo")}</p>
+            <p>{t("Upload Your Photo")}</p>
             <div {...getRootProps()}>
               <input {...getInputProps()} />
 
@@ -269,7 +269,7 @@ const CampaignForm: FC<IProps> = ({ submitCallback, page_id }) => {
 
   return (
     <>
-      <TileButton title={t("add-new-group")} onClick={modalHandler} />
+      <TileButton title={t("Add New Group")} onClick={modalHandler} />
       <form onSubmit={handleSubmit(submit)}>
         <Modal isVisible={openModal} width="max(800px , 50%)" height="500px" isLoading={loading}>
           <div className="w-full flex flex-col justify-between	h-full" style={{ height: 460 }}>

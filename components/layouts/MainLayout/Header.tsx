@@ -155,13 +155,13 @@ const Header: FC<IHeader> = ({ isLoggedIn }) => {
         ) : (
           <>
             <Button
-              title={t("login")}
+              title={t("Login")}
               variant="text"
               onClick={() => changeRoute(Path.PhoneLogin)}
               size="sm"
             />
             <Button
-              title={t("register")}
+              title={t("Register")}
               color="secondary"
               onClick={() => changeRoute(Path.PhoneRegister)}
               size="sm"

@@ -107,7 +107,7 @@ export const Tile: FC<ITile> = ({
                   >
                     <div className="py-4">
                       <Typography.Text>
-                        {t("are-you-sure-to-delete")}
+                        {t("Are You Sure To Delete")}
                       </Typography.Text>
                     </div>
                   </Modal>

@@ -63,7 +63,7 @@ const ChatbotPage: NextPageWithLayout = () => {
         <div className="basis-1/6 m-3 ">
           <TileButton
             onClick={() => {}}
-            title={t("add-new-account")}
+            title={t("Add New Account")}
             color="chatbot"
           />
         </div>
@@ -84,7 +84,7 @@ const ChatbotPage: NextPageWithLayout = () => {
                 height="255px"
                 click={() => {}}
                 buttonColor="chatbot"
-                clickLabel={t("details")}
+                clickLabel={t("Details")}
                 remove={removeChatflow}
               >
                 <div className="flex flex-col text-center">
