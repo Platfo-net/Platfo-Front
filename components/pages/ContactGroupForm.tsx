@@ -126,7 +126,7 @@ const ContactGroupForm: FC<IProps> = ({ pageId, change }) => {
                       render={({ field: { onChange } }) => (
                         <AvatarCheckBox
                           color="notifier"
-                          label={contact.information.name || ""}
+                          label={contact.username || ""}
                           onChange={(e) =>
                             onChange(
                               e.currentTarget.checked
@@ -137,7 +137,7 @@ const ContactGroupForm: FC<IProps> = ({ pageId, change }) => {
                                 : undefined
                             )
                           }
-                          avatar={<Avatar url={contact.information.profile_image} size={3.5} type="image" />}
+                          avatar={<Avatar url={contact.profile_image} size={3.5} type="image" />}
                         />
                       )}
                     />

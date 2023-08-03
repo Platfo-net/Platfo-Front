@@ -8,7 +8,7 @@ import { Path } from "@/constants/enums";
 import { DashboardLayout } from "@/components/layouts/DashboardLayout";
 import InfoSection from "@/components/dataDisplay/InfoSection/InfoSection";
 import { Avatar } from "@/components/dataDisplay/Avatar";
-import { GetStaticPaths,GetStaticProps } from "next";
+import { GetStaticPaths, GetStaticProps } from "next";
 import BackdropLoading from "@/components/feedback/BackdropLoading/BackdropLoading";
 import LiveChatService from "@/services/endpoints/LiveChatService";
 import { IContact, Res_LiveChat_Contact_Id } from "@/types/api";
@@ -50,44 +50,38 @@ const ContactDetailsPage: NextPageWithLayout = () => {
       {contactInfo && (
         <InfoSection
           username={contactInfo.username}
-          follows={contactInfo.information.follows_count}
-          name={contactInfo.information.name}
+          follows={contactInfo.followers_count}
+          name={contactInfo.name}
           avatar={
             <Avatar
               type="image"
-              url={contactInfo.information.profile_image}
+              url={contactInfo.profile_image}
               size={7}
               click={() => {}}
             />
           }
-          description={contactInfo.information.biography}
-          followers={contactInfo.information.followers_count}
+          followers={contactInfo.followers_count}
           extra={
             <ul className="flex flex-col justify-between h-full">
-              {contactInfo.information.is_verified_user !== undefined && (
+              {contactInfo.is_verified_user !== undefined && (
                 <li className="flex space-x-2 ">
-                  <Dot
-                    isTrue={contactInfo.information.is_verified_user}
-                    className="my-1"
-                  />
+                  <Dot isTrue={contactInfo.is_verified_user} className="my-1" />
                   <Text>{t("Is Verified User")}</Text>
                 </li>
               )}
-              {contactInfo.information.is_user_follow_business !==
-                undefined && (
+              {contactInfo.is_user_follow_business !== undefined && (
                 <li className="flex space-x-2">
                   <Dot
-                    isTrue={contactInfo.information.is_user_follow_business}
+                    isTrue={contactInfo.is_user_follow_business}
                     className="my-1"
                   />
                   <Text>{t("Is User Follow business")}</Text>
                 </li>
               )}
-              {contactInfo.information.is_business_follow_user !==
-                undefined && (
+              {contactInfo.is_business_follow_user !== undefined && (
                 <li className="flex space-x-2">
                   <Dot
-                    isTrue={contactInfo.information.is_business_follow_user}
+                    isTrue={contactInfo.is_business_follow_user}
                     className="my-1"
                   />
                   <Text>{t("Is Business Follow User")}</Text>
@@ -117,7 +111,7 @@ export const getStaticPaths: GetStaticPaths<{ id: string }> = async () => {
     fallback: "blocking",
   };
 };
-export const getStaticProps: GetStaticProps = async context => {
+export const getStaticProps: GetStaticProps = async (context) => {
   return { props: {} };
 };
 

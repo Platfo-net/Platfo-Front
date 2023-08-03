@@ -8,7 +8,7 @@ import { Application, Path } from "@/constants/enums";
 import { DashboardLayout } from "@/components/layouts/DashboardLayout";
 import InfoSection from "@/components/dataDisplay/InfoSection/InfoSection";
 import AccountService from "@/services/endpoints/AccountService";
-import { Res_Account_Id, Res_Connection_All } from "@/types/api";
+import { IContact, Res_Account_Id, Res_Connection_All } from "@/types/api";
 import ConnectionService from "@/services/endpoints/ConnectionService";
 import { Avatar } from "@/components/dataDisplay/Avatar";
 import { useTranslation } from "next-i18next";
@@ -26,14 +26,14 @@ const AccountDetailsPage: NextPageWithLayout = () => {
   const router = useRouter();
   const { id } = router.query;
 
-  const [accountInfo, setAccountInfo] = useState<Res_Account_Id>();
+  const [accountInfo, setAccountInfo] = useState<IContact>();
   const [connections, setConnections] = useState<Res_Connection_All>([]);
   const [openModal, setOpenModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [record, setRecord] = useState(null);
 
   const getAccountDetails = useCallback(async () => {
-    const response: AxiosResponse<Res_Account_Id> =
+    const response: AxiosResponse<IContact> =
       await AccountService.getAccount(id as string);
     setAccountInfo(response.data);
   }, [id]);
@@ -77,8 +77,8 @@ const AccountDetailsPage: NextPageWithLayout = () => {
       {accountInfo && (
         <InfoSection
           username={accountInfo.username}
-          follows={accountInfo.information.follows_count}
-          name={accountInfo.information.name}
+          follows={accountInfo.followers_count}
+          name={accountInfo.name}
           avatar={
             <Avatar
               type="image"
@@ -87,8 +87,7 @@ const AccountDetailsPage: NextPageWithLayout = () => {
               click={() => {}}
             />
           }
-          description={accountInfo.information.biography}
-          followers={accountInfo.information.followers_count}
+          followers={accountInfo.followers_count}
         />
       )}
 

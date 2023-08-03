@@ -148,7 +148,7 @@ const RegisterPage: NextPageWithLayout = () => {
           <form className="mt-7 flex flex-col flex-auto" onSubmit={onSubmit}>
             <div className="px-3">
               <div className="my-3">
-                <div className="ml-3 text-black">Phone</div>
+                <div className="ml-3 text-black">Phone Number</div>
                 <Input error={errors?.phone?.message} {...register("phone")} />
               </div>
               <div className="my-3">

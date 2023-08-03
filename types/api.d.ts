@@ -1,5 +1,5 @@
-import { Application, Platform } from '@/constants/enums';
-import { StoryIndex } from '@storybook/store';
+import { Application, Platform } from "@/constants/enums";
+import { StoryIndex } from "@storybook/store";
 
 export type Pagination = {
   page: number;
@@ -73,10 +73,8 @@ export type Body_Instagram = {
 export interface IInformation {
   website?: string;
   followers_count?: number;
-  follows_count?: number;
   biography?: string;
   name?: string;
-  profile_image?: string;
   is_verified_user?: boolean;
   is_user_follow_business?: boolean;
   is_business_follow_user?: boolean;
@@ -129,7 +127,7 @@ export type Res_BotBuilder_Chatflow_All = IChatflow[];
 export interface IParams_Pagination {
   page?: number;
   page_size?: number;
-  facebook_page_id: string
+  facebook_page_id: string;
 }
 
 export interface INotification {
@@ -147,20 +145,22 @@ export type Body_Livechat_Contact_All_FacebookPageId = {
 }[];
 
 export interface IContact {
-  id: string;
-  user_id: string;
   contact_igs_id: boolean;
-  user_page_id: string;
-  comment_count: number;
-  message_count: number;
-  live_comment_count: number;
-  //Todo ask type
+  facebook_page_id: number;
   first_impression?: string;
-  last_message_at: string;
-  username?: string;
-  information: IInformation;
+  id: string;
+  last_interaction_at: string;
   last_message?: string;
+  last_message_at: string;
+  profile_image?: string;
+  username: string;
+  followers_count: number;
+  is_business_follow_user: boolean;
+  is_user_follow_business: boolean;
+  is_verified_user: boolean;
+  name: string;
 }
+
 export type Res_LiveChat_Contact_All_PageId = {
   items: IContact[];
   pagination: Pagination;
@@ -172,7 +172,7 @@ export interface IContactGroup {
   id: string;
   name: string;
   description: string;
-  contacts: { profile_image: string, username: string }[];
+  contacts: { profile_image: string; username: string }[];
 }
 export type Res_Notifier_Group_FacebookPageId = {
   items: IContactGroup[];
@@ -188,7 +188,6 @@ export type Body_Notifier_Group = {
     contact_id: string;
   }[];
 };
-
 
 export type Body_Notifier_Campaign = {
   name: string;
@@ -206,12 +205,12 @@ export type Body_Notifier_Campaign = {
 };
 
 export interface ICampaign {
-  id :string
+  id: string;
   name: string;
   description: string;
   status: string;
   is_draft: Boolean;
-  created_at:Date;
+  created_at: Date;
   group_name: string;
   facebook_page_id: string;
   account: {
@@ -222,8 +221,8 @@ export interface ICampaign {
     page_id: string;
   };
   content: {
-    object
-    text:string
+    object;
+    text: string;
   };
   user_id: string;
   contacts: [string];
@@ -245,7 +244,6 @@ export type file = {
   type: string;
   webkitRelativePath: string;
 };
-
 
 export type Res_file = {
   filename: string;

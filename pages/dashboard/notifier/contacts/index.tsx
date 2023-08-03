@@ -117,13 +117,14 @@ const ContactsPage: NextPageWithLayout = () => {
 
       <div className="flex flex-wrap">
         {contacts?.map((contact) => {
+          console.log(contact)
           return (
             <div className="basis-1/6 m-3" key={contact.id}>
               <Tile
                 data={contact}
                 avatar={
                   <Avatar
-                    url={contact.information.profile_image}
+                    url={contact.profile_image}
                     size={6}
                     type="image"
                   />
@@ -135,8 +136,8 @@ const ContactsPage: NextPageWithLayout = () => {
                 clickLabel={t("Details")}
               >
                 <div className="flex flex-col text-center w-full">
-                  <Text weight="semiBold"> {contact.information.name} </Text>
-                  <div className="flex justify-between mt-4 mx-4 ">
+                  <Text weight="semiBold"> {contact.username} </Text>
+                  {/* <div className="flex justify-between mt-4 mx-4 ">
                     <IconText
                       icon="Comment"
                       title={contact.comment_count.toString()}
@@ -149,7 +150,7 @@ const ContactsPage: NextPageWithLayout = () => {
                       icon="LiveComment"
                       title={contact.live_comment_count.toString()}
                     />
-                  </div>
+                  </div> */}
                 </div>
               </Tile>
             </div>

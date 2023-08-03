@@ -30,7 +30,7 @@ export const AvatarGroup: React.FC<IAvatarGroup> = ({
 }) => {
   return (
     <Wrapper size={size} className={className}>
-      {data.map((item) => (
+      {data?.map((item) => (
         <List key={item[nameKey]} size={size}>
           <Avatar size={size} type="image" url={item[urlKey]} />
         </List>

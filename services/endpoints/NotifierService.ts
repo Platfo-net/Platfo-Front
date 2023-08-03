@@ -7,7 +7,7 @@ class Notifier extends BaseApi {
   }
   getGroups = (page_id: string, params?: IParams_Pagination) => this.$axios.get(`group/${page_id}`, { params });
 
-  postGroup = (data: Body_Notifier_Group) => this.$axios.post(`group`, data);
+  postGroup = (data: Body_Notifier_Group) => this.$axios.post(`group/`, data);
 
   deleteGroup = (id: string) => this.$axios.delete(`group/${id}`);
 
