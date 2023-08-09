@@ -20,7 +20,7 @@ export const sidebarMenu: Menu = {
       type: "link",
       color: "chatbot",
       icon: "Chatbot",
-      isDisable: false,
+      isDisable: true,
     },
     {
       key: "liveChat",
