@@ -30,6 +30,7 @@ const Input: any = forwardRef(
             width: "100%",
             padding: ".5rem",
             background: "rgba(139, 202, 193 , .24)",
+            color: "#000",
           }}
           {...rest}
         />
@@ -67,13 +68,13 @@ const RegisterPage: NextPageWithLayout = () => {
     formState: { errors },
   } = useForm<FormValues>({ resolver });
 
-  const router = useRouter()
+  const router = useRouter();
 
   const login = async (data: Body_Phone_Login) => {
     try {
       const response: AxiosResponse<Res_Auth_AccessToken> =
         await AuthService.postPhoneLogin(data);
-        tokenObj.setToken(response.data.access_token);
+      tokenObj.setToken(response.data.access_token);
       router.push({ pathname: Path.Accounts });
     } catch (e) {
       console.log(e);
