@@ -87,77 +87,87 @@ const ContactsPage: NextPageWithLayout = () => {
   }, []);
 
   return (
-    <>
+    <div className="m-3">
       <BackdropLoading loading={loading} />
-      {accounts.length > 0 && (
-        <Tile className="m-3" width="auto">
-          <div className="flex w-full space-x-4 justify-start overflow-x-auto">
-            {accounts.map((account) => {
-              return (
-                <Avatar
-                  key={account.id}
-                  url={account.profile_image}
-                  type="image"
-                  click={changeSelectedAccount}
-                  data={account}
-                  isActive={account.id === selectedAccount?.id}
-                  color="notifier"
-                  icon={
-                    Platform[
-                      account.platform as unknown as keyof typeof Platform
-                    ]
-                  }
-                  title={account.username}
-                />
-              );
-            })}
-          </div>
-        </Tile>
-      )}
-
-      <div className="flex flex-wrap">
-        {contacts?.map((contact) => {
-          console.log(contact)
-          return (
-            <div className="basis-1/6 m-3" key={contact.id}>
-              <Tile
-                data={contact}
-                avatar={
+      <div className="my-2">
+        <h2 className=" my-4 text-xl font-semibold">My Instagram Accounts</h2>
+        {accounts.length > 0 && (
+          <Tile width="auto">
+            <div className="flex w-full space-x-4 justify-start overflow-x-auto">
+              {accounts.map((account) => {
+                return (
                   <Avatar
-                    url={contact.profile_image}
-                    size={6}
+                    key={account.id}
+                    url={account.profile_image}
                     type="image"
+                    click={changeSelectedAccount}
+                    data={account}
+                    isActive={account.id === selectedAccount?.id}
+                    color="notifier"
+                    icon={
+                      Platform[
+                        account.platform as unknown as keyof typeof Platform
+                      ]
+                    }
+                    title={account.username}
                   />
-                }
-                width="280px"
-                height="280px"
-                click={changeRoute}
-                buttonColor="notifier"
-                clickLabel={t("Details")}
-              >
-                <div className="flex flex-col text-center w-full">
-                  <Text weight="semiBold"> {contact.username} </Text>
-                  {/* <div className="flex justify-between mt-4 mx-4 ">
-                    <IconText
-                      icon="Comment"
-                      title={contact.comment_count.toString()}
-                    />
-                    <IconText
-                      icon="PaperPlane"
-                      title={contact.message_count.toString()}
-                    />
-                    <IconText
-                      icon="LiveComment"
-                      title={contact.live_comment_count.toString()}
-                    />
-                  </div> */}
-                </div>
-              </Tile>
+                );
+              })}
             </div>
-          );
-        })}
+          </Tile>
+        )}
       </div>
-    </>
+
+      <div className="my-4">
+        <div className="flex flex-col flex-wrap">
+          <h2 className="my-2 text-xl font-semibold">My Contacts</h2>
+          {contacts && contacts.length ? (
+            contacts.map((contact) => {
+              console.log(contact);
+              return (
+                <div className="basis-1/6" key={contact.id}>
+                  <Tile
+                    data={contact}
+                    avatar={
+                      <Avatar
+                        url={contact.profile_image}
+                        size={6}
+                        type="image"
+                      />
+                    }
+                    width="280px"
+                    height="280px"
+                    click={changeRoute}
+                    buttonColor="notifier"
+                    clickLabel={t("Details")}
+                  >
+                    <div className="flex flex-col text-center w-full">
+                      <Text weight="semiBold"> {contact.username} </Text>
+                      {/* <div className="flex justify-between mt-4 mx-4 ">
+                      <IconText
+                        icon="Comment"
+                        title={contact.comment_count.toString()}
+                      />
+                      <IconText
+                        icon="PaperPlane"
+                        title={contact.message_count.toString()}
+                      />
+                      <IconText
+                        icon="LiveComment"
+                        title={contact.live_comment_count.toString()}
+                      />
+                    </div> */}
+                    </div>
+                  </Tile>
+                </div>
+              );
+            })
+          ) : (
+            <div>No contacts registered yet for this account</div>
+          )}
+        </div>
+      </div>
+    </div>
   );
 };
 
